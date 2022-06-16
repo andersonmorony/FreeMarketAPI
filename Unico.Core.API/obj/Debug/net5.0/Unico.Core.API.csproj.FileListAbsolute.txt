@@ -41,3 +41,9 @@ C:\Users\a.de.souza.ramos\source\repos\Unico\Unico.Core.API\bin\Debug\net5.0\Mic
 C:\Users\a.de.souza.ramos\source\repos\Unico\Unico.Core.API\bin\Debug\net5.0\Microsoft.EntityFrameworkCore.InMemory.dll
 C:\Users\a.de.souza.ramos\source\repos\Unico\Unico.Core.API\bin\Debug\net5.0\Microsoft.EntityFrameworkCore.Relational.dll
 C:\Users\a.de.souza.ramos\source\repos\Unico\Unico.Core.API\obj\Debug\net5.0\Unico.Core.API.csprojAssemblyReference.cache
+C:\Users\a.de.souza.ramos\source\repos\Unico\Unico.Core.API\bin\Debug\net5.0\AutoMapper.dll
+C:\Users\a.de.souza.ramos\source\repos\Unico\Unico.Core.API\bin\Debug\net5.0\AutoMapper.Extensions.Microsoft.DependencyInjection.dll
+C:\Users\a.de.souza.ramos\source\repos\Unico\Unico.Core.API\bin\Debug\net5.0\Microsoft.Extensions.DependencyInjection.Abstractions.dll
+C:\Users\a.de.souza.ramos\source\repos\Unico\Unico.Core.API\bin\Debug\net5.0\Microsoft.Extensions.Options.dll
+C:\Users\a.de.souza.ramos\source\repos\Unico\Unico.Core.API\bin\Debug\net5.0\Microsoft.Extensions.Primitives.dll
+C:\Users\a.de.souza.ramos\source\repos\Unico\Unico.Core.API\bin\Debug\net5.0\System.Runtime.CompilerServices.Unsafe.dll

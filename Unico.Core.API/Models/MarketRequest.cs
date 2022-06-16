@@ -2,7 +2,6 @@
 {
     public class MarketRequest
     {
-        public int Id { get; set; }
         public string LONG { get; set; }
         public string LAT { get; set; }
         public long SETCENS { get; set; }

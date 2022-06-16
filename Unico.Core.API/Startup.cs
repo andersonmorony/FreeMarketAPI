@@ -6,6 +6,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using Unico.Core.API.Data;
+using AutoMapper;
 
 namespace Unico.Core.API
 {
@@ -25,6 +26,8 @@ namespace Unico.Core.API
             {
                 options.UseInMemoryDatabase("Market");
             });
+
+            services.AddAutoMapper(typeof(Startup));
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
