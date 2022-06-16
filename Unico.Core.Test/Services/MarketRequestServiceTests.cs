@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Unico.Core.API.Data;
 using Unico.Core.API.Services;
 using Xunit;
@@ -13,24 +14,42 @@ namespace Unico.Core.Test.Services
 
         public MarketRequestServiceTests()
         {
-            var options = new DbContextOptionsBuilder<AppDbContext>().UseInMemoryDatabase(nameof(ShouldReturnMarket)).Options;
-            _dbContext = new AppDbContext(options);
-            seedData();
+           
+            
         }
 
         [Fact]
         public async void ShouldReturnMarket()
         {
-            var _marketService = new MarketService(_dbContext);
+            var options = new DbContextOptionsBuilder<AppDbContext>().UseInMemoryDatabase(nameof(ShouldReturnMarket)).Options;
+            var dbContext = new AppDbContext(options);
+            seedData(dbContext);
+            var _marketService = new MarketService(dbContext);
 
             var result = await _marketService.GetMarketsAsync();
 
             Assert.True(result.IsSuccess);
+
             Assert.True(result.markets.Any());
+
             Assert.Null(result.MsgError);
 
         }
-        private void seedData()
+        [Fact]
+        public async void ShouldReturnFalseToNoData()
+        {
+            var options = new DbContextOptionsBuilder<AppDbContext>().UseInMemoryDatabase(nameof(ShouldReturnFalseToNoData)).Options;
+            var dbContext = new AppDbContext(options);
+
+            var _marketService = new MarketService(dbContext);
+
+            var result = await _marketService.GetMarketsAsync();
+
+            Assert.False(result.IsSuccess);
+            Assert.Null(result.markets);
+            Assert.NotNull(result.MsgError);
+        }
+        private void seedData(AppDbContext _dbContext)
         {
             if (!_dbContext.Markets.Any())
             {
