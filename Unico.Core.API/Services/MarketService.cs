@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -14,38 +15,49 @@ namespace Unico.Core.API.Services
     {
         private readonly AppDbContext _dbContext;
         private readonly IMapper _mapper;
+        private readonly ILogger _logger;
 
-        public MarketService(AppDbContext dbContext, IMapper mapper)
+        public MarketService(AppDbContext dbContext, IMapper mapper, ILogger logger)
         {
             _dbContext = dbContext;
             _mapper = mapper;
+            _logger = logger;
         }
 
         public async Task<(IEnumerable<Market> markets, bool IsSuccess, string MsgError)> GetMarketsAsync()
         {
-            
-            var response = await _dbContext.Markets.ToListAsync();
-
-            if(response.Any())
+            _logger.LogInformation("GetMarketsAsync was called");
+            try
             {
-                return (response, true, null);
+                var response = await _dbContext.Markets.ToListAsync();
+                if (response.Any())
+                {
+                    return (response, true, null);
+                }
+                _logger.LogInformation("GetMarketsAsync was called but no data");
+                return (null, false, "No Data");
             }
-            return (null, false, "No Data");
-
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.ToString());
+                return (null, false, ex.Message);
+            }
         }
 
         public async Task<(Market markets, bool IsSuccess, string MsgError)> CreateMarketAsync(MarketRequest request)
         {
+            _logger.LogInformation("CreateMarketAsync was called");
             var model = _mapper.Map<Market>(request);
             try
             {
                 _dbContext.Markets.Add(model);
                 _dbContext.SaveChanges();
-                
+                _logger.LogInformation("CreateMarketAsync was called and Market was created");
                 return (model, true, null);
 
             }catch(Exception ex)
             {
+                _logger.LogError(ex.ToString());
                 return (null, false, ex.Message);
             }
 

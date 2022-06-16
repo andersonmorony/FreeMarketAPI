@@ -28,7 +28,7 @@ namespace Unico.Core.Test.Services
             var options = new DbContextOptionsBuilder<AppDbContext>().UseInMemoryDatabase(nameof(ShouldReturnMarket)).Options;
             var dbContext = new AppDbContext(options);
             seedData(dbContext);
-            var _marketService = new MarketService(dbContext, _mapper);
+            var _marketService = new MarketService(dbContext, _mapper, null);
 
             var result = await _marketService.GetMarketsAsync();
 
@@ -45,7 +45,7 @@ namespace Unico.Core.Test.Services
             var options = new DbContextOptionsBuilder<AppDbContext>().UseInMemoryDatabase(nameof(ShouldReturnFalseToNoData)).Options;
             var dbContext = new AppDbContext(options);
 
-            var _marketService = new MarketService(dbContext, _mapper);
+            var _marketService = new MarketService(dbContext, _mapper, null);
 
             var result = await _marketService.GetMarketsAsync();
 
@@ -60,7 +60,7 @@ namespace Unico.Core.Test.Services
 
             var dbContext = new AppDbContext(options);
 
-            var _marketService = new MarketService(dbContext, _mapper);
+            var _marketService = new MarketService(dbContext, _mapper, null);
 
             var request = new MarketRequest() { LONG = "-46550164", SETCENS = 355030885000091, AREAP = 3550308005040, CODDIST = 87, DISTRITO = "VILA", CODSUBPREF = 26, SUBPREFE = "VILA PRUDENTE", REGIAO5 = "LESTE", REGIAO8 = "LESTE 1", NOME_FEIRA = "VILA FONSECA", REGISTRO = "4041-0", LOGRADOURO = "RUA X", BAIRRO = "SP", LAT = "-23558733", NUMERO = 15, REFERENCIA = "" };
 
