@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -70,6 +71,39 @@ namespace Unico.Core.Test.Services
             Assert.Equal(result.markets.LONG, request.LONG);
             Assert.Null(result.MsgError);
 
+        }
+        [Fact]
+        public async void ShoudDeleteMarket()
+        {
+            var options = new DbContextOptionsBuilder<AppDbContext>().UseInMemoryDatabase(nameof(ShoudDeleteMarket)).Options;
+
+            var dbContext = new AppDbContext(options);
+
+            seedData(dbContext);
+
+            var _marketService = new MarketService(dbContext, _mapper, null);
+
+            var result = await _marketService.DeleteMarketAsync("4041-0");
+
+            Assert.True(result.IsSuccess);
+            Assert.Null(result.MsgError);
+        }
+        [Fact]
+        public async void ShoudNotDeleteMarket()
+        {
+            var options = new DbContextOptionsBuilder<AppDbContext>().UseInMemoryDatabase(nameof(ShoudNotDeleteMarket)).Options;
+
+            var dbContext = new AppDbContext(options);
+
+            seedData(dbContext);
+
+            var _marketService = new MarketService(dbContext, _mapper, null);
+
+            var result = await _marketService.DeleteMarketAsync("InvalidReg");
+
+            Assert.False(result.IsSuccess);
+            Assert.NotNull(result.MsgError);
+            Assert.Equal("Not Found", result.MsgError);
         }
         private void seedData(AppDbContext _dbContext)
         {
