@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
-    <RootNamespace>Unico.Core</RootNamespace>
+    <RootNamespace>Unico.Core.API</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>

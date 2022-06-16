@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using Unico.Core.API.Services;
 using Xunit;
 
 namespace Unico.Core.Test.Services
