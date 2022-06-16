@@ -24,14 +24,15 @@ namespace Unico.Core.API.Services
             _logger = logger;
         }
 
-        public async Task<(IEnumerable<Market> markets, bool IsSuccess, string MsgError)> GetMarketsAsync()
+        public async Task<(IEnumerable<MarketResponse> markets, bool IsSuccess, string MsgError)> GetMarketsAsync()
         {
             _logger?.LogInformation("GetMarketsAsync was called");
             try
             {
-                var response = await _dbContext.Markets.ToListAsync();
-                if (response.Any())
+                var result = await _dbContext.Markets.ToListAsync();
+                if (result.Any())
                 {
+                    var response = _mapper.Map<IEnumerable<MarketResponse>>(result);
                     return (response, true, null);
                 }
                 _logger?.LogInformation("GetMarketsAsync was called but no data");
@@ -44,7 +45,7 @@ namespace Unico.Core.API.Services
             }
         }
 
-        public async Task<(Market markets, bool IsSuccess, string MsgError)> CreateMarketAsync(MarketRequest request)
+        public async Task<(MarketResponse markets, bool IsSuccess, string MsgError)> CreateMarketAsync(MarketRequest request)
         {
             _logger?.LogInformation("CreateMarketAsync was called");
             var model = _mapper.Map<Market>(request);
@@ -53,7 +54,9 @@ namespace Unico.Core.API.Services
                 _dbContext.Markets.Add(model);
                 _dbContext.SaveChanges();
                 _logger?.LogInformation("CreateMarketAsync was called and Market was created");
-                return (model, true, null);
+
+                var response = _mapper.Map<MarketResponse>(model);
+                return (response, true, null);
 
             }catch(Exception ex)
             {
@@ -86,7 +89,7 @@ namespace Unico.Core.API.Services
             }
         }
 
-        public async Task<(MarketRequest marketRequest, bool IsSuccess, string MsgError)> EditMarketAsync(int Id, MarketRequest marketRequest)
+        public async Task<(MarketResponse marketResponse, bool IsSuccess, string MsgError)> EditMarketAsync(int Id, MarketRequest marketRequest)
         {
             try
             {
@@ -99,7 +102,7 @@ namespace Unico.Core.API.Services
                     _mapper.Map(marketRequest, market);
                     await _dbContext.SaveChangesAsync();
 
-                    var marketEdited = _mapper.Map<MarketRequest>(market);
+                    var marketEdited = _mapper.Map<MarketResponse>(market);
                     _logger?.LogInformation($"EditMarketAsync was called and Edite the market with Id {Id}");
                     return (marketEdited, true, null);
                 }

@@ -68,8 +68,10 @@ namespace Unico.Core.Test.Services
             var result = await _marketService.CreateMarketAsync(request);
 
             Assert.True(result.IsSuccess);
-            Assert.Equal(result.markets.LONG, request.LONG);
             Assert.Null(result.MsgError);
+            Assert.NotNull(result.markets);
+            Assert.Equal(request.LONG, result.markets.LONG);
+            Assert.Equal(1, result.markets.Id);
 
         }
         [Fact]
@@ -120,9 +122,10 @@ namespace Unico.Core.Test.Services
 
             Assert.True(result.IsSuccess);
             Assert.Null(result.MsgError);
-            Assert.Equal("-1111111", result.marketRequest.LONG);
-            Assert.Equal(355030885000091, result.marketRequest.SETCENS);
-            Assert.Equal("EDITED VILA", result.marketRequest.DISTRITO);
+            Assert.Equal(1, result.marketResponse.Id);
+            Assert.Equal("-1111111", result.marketResponse.LONG);
+            Assert.Equal(355030885000091, result.marketResponse.SETCENS);
+            Assert.Equal("EDITED VILA", result.marketResponse.DISTRITO);
 
         }
         private void seedData(AppDbContext _dbContext)
