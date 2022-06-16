@@ -85,5 +85,33 @@ namespace Unico.Core.API.Services
                 return (false, ex.Message);
             }
         }
+
+        public async Task<(MarketRequest marketRequest, bool IsSuccess, string MsgError)> EditMarketAsync(int Id, MarketRequest marketRequest)
+        {
+            try
+            {
+                _logger?.LogInformation("EditMarketAsync was called");
+
+                var market = _dbContext.Markets.FirstOrDefault(m => m.Id == Id);
+
+                if(market != null)
+                {
+                    _mapper.Map(marketRequest, market);
+                    await _dbContext.SaveChangesAsync();
+
+                    var marketEdited = _mapper.Map<MarketRequest>(market);
+                    _logger?.LogInformation($"EditMarketAsync was called and Edite the market with Id {Id}");
+                    return (marketEdited, true, null);
+                }
+                _logger?.LogInformation("EditMarketAsync was called, but item not found");
+                return (null, false, "Not found");
+
+            }
+            catch (Exception ex)
+            {
+                _logger?.LogError(ex.ToString());
+                return (null, false, ex.Message);
+            }
+        }
     }
 }
