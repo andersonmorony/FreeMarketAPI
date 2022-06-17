@@ -7,6 +7,8 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using Unico.Core.API.Data;
 using AutoMapper;
+using Unico.Core.API.ServicesInterface;
+using Unico.Core.API.Services;
 
 namespace Unico.Core.API
 {
@@ -22,6 +24,8 @@ namespace Unico.Core.API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddScoped<IMarketServices, MarketService>();
+
             services.AddDbContext<AppDbContext>(options =>
             {
                 options.UseInMemoryDatabase("Market");

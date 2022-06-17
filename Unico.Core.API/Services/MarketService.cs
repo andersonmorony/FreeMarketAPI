@@ -8,10 +8,11 @@ using System.Linq;
 using System.Threading.Tasks;
 using Unico.Core.API.Data;
 using Unico.Core.API.Models;
+using Unico.Core.API.ServicesInterface;
 
 namespace Unico.Core.API.Services
 {
-    public  class MarketService
+    public  class MarketService : IMarketServices
     {
         private readonly AppDbContext _dbContext;
         private readonly IMapper _mapper;
