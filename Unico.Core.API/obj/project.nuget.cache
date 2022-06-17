@@ -1,11 +1,12 @@
 {
   "version": 2,
-  "dgSpecHash": "zbZopGXH5x2U06zNZ1e3OYgSLW6M6/5s5vfVy96dQ0mzbNcfbIlQf60p942UJchQtzUwG1E7g+YHgbVPgTocrA==",
+  "dgSpecHash": "0T1CvxHLYBAz1XVTg2+cRmg7Ga61wi/tPNLI7onlIzk2NnmFKBRJCXivgLe20QCtXS9cBTY9TgwGnmOFKy+JLQ==",
   "success": true,
   "projectFilePath": "C:\\Users\\a.de.souza.ramos\\source\\repos\\Unico\\Unico.Core.API\\Unico.Core.API.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\a.de.souza.ramos\\.nuget\\packages\\automapper\\11.0.0\\automapper.11.0.0.nupkg.sha512",
     "C:\\Users\\a.de.souza.ramos\\.nuget\\packages\\automapper.extensions.microsoft.dependencyinjection\\11.0.0\\automapper.extensions.microsoft.dependencyinjection.11.0.0.nupkg.sha512",
+    "C:\\Users\\a.de.souza.ramos\\.nuget\\packages\\csvhelper\\27.2.1\\csvhelper.27.2.1.nupkg.sha512",
     "C:\\Users\\a.de.souza.ramos\\.nuget\\packages\\humanizer.core\\2.8.26\\humanizer.core.2.8.26.nupkg.sha512",
     "C:\\Users\\a.de.souza.ramos\\.nuget\\packages\\microsoft.aspnetcore.authentication.jwtbearer\\5.0.1\\microsoft.aspnetcore.authentication.jwtbearer.5.0.1.nupkg.sha512",
     "C:\\Users\\a.de.souza.ramos\\.nuget\\packages\\microsoft.aspnetcore.authentication.openidconnect\\5.0.1\\microsoft.aspnetcore.authentication.openidconnect.5.0.1.nupkg.sha512",

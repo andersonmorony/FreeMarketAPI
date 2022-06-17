@@ -14,8 +14,13 @@ namespace Unico.Core.API.Profiles
         {
             CreateMap<MarketRequest, Market>()
                 .ReverseMap();
+            CreateMap<MarketRequest, MarketCsv>()
+               .ReverseMap();
             CreateMap<MarketResponse, Market>()
                 .ReverseMap();
+            CreateMap<Market, MarketCsv>()
+               .ReverseMap();
+
         }
     }
 }

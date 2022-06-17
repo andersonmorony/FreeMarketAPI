@@ -13,5 +13,7 @@ namespace Unico.Core.API.ServicesInterface
         Task<(bool IsSuccess, string MsgError)> DeleteMarketAsync(int id);
         Task<(MarketResponse marketResponse, bool IsSuccess, string MsgError)> EditMarketAsync(int Id, MarketRequest marketRequest);
         Task<(IEnumerable<MarketResponse> marketResponse, bool IsSuccess, string MsgError)> GetMarketsByNameAync(string marketName);
+
+        Task<(IEnumerable<MarketCsv> marketResponse, bool IsSuccess, string MsgError)> UploadCsvToCreateMarkets(IEnumerable<MarketCsv> request);
     }
 }

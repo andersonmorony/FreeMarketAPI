@@ -20,7 +20,7 @@ namespace Unico.Core.API.Models
         public string NOME_FEIRA { get; set; }
         public string REGISTRO { get; set; }
         public string LOGRADOURO { get; set; }
-        public int? NUMERO { get; set; }
+        public string NUMERO { get; set; }
         public string BAIRRO { get; set; }
         public string REFERENCIA { get; set; }
     }

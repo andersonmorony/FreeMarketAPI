@@ -141,5 +141,27 @@ namespace Unico.Core.API.Services
             }
             
         }
+        public async Task<(IEnumerable<MarketCsv> marketResponse, bool IsSuccess, string MsgError)> UploadCsvToCreateMarkets(IEnumerable<MarketCsv> request)
+        {
+            try
+            {
+                _logger?.LogInformation("UploadCsvToCreateMarkets was called");
+
+                var marketRequest = _mapper.Map<IEnumerable<Market>>(request);
+                    
+                await _dbContext.Markets.AddRangeAsync(marketRequest);
+                await _dbContext.SaveChangesAsync();
+
+                var marketResponse = _mapper.Map<IEnumerable<MarketCsv>>(marketRequest);
+
+                return (marketResponse, true, null);
+                    
+            }
+            catch (Exception ex)
+            {
+                _logger?.LogError(ex.ToString());
+                return (null, false, ex.Message);
+            }
+        }
     }
 }
