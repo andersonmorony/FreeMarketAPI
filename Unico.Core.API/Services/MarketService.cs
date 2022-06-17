@@ -66,18 +66,18 @@ namespace Unico.Core.API.Services
 
         }
 
-        public async Task<(bool IsSuccess, string MsgError)> DeleteMarketAsync(string codReg)
+        public async Task<(bool IsSuccess, string MsgError)> DeleteMarketAsync(int id)
         {
             try
             {
                 _logger?.LogInformation("DeleteMarketAsync was called");
-                var market = _dbContext.Markets.FirstOrDefault(m => m.REGISTRO == codReg);
+                var market = _dbContext.Markets.FirstOrDefault(m => m.Id == id);
 
                 if(market != null)
                 {
                     _dbContext.Markets.Remove(market);
                     await _dbContext.SaveChangesAsync();
-                    _logger?.LogInformation($"DeleteMarketAsync was called and item with codReg {codReg} was Deleted");
+                    _logger?.LogInformation($"DeleteMarketAsync was called and item with codReg {id} was Deleted");
                     return (true, null);
                 }
                 return (false, "Not Found");

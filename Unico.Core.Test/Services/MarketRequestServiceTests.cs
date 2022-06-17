@@ -85,7 +85,7 @@ namespace Unico.Core.Test.Services
 
             var _marketService = new MarketService(dbContext, _mapper, null);
 
-            var result = await _marketService.DeleteMarketAsync("4041-0");
+            var result = await _marketService.DeleteMarketAsync(1);
 
             Assert.True(result.IsSuccess);
             Assert.Null(result.MsgError);
@@ -101,7 +101,7 @@ namespace Unico.Core.Test.Services
 
             var _marketService = new MarketService(dbContext, _mapper, null);
 
-            var result = await _marketService.DeleteMarketAsync("InvalidReg");
+            var result = await _marketService.DeleteMarketAsync(-1);
 
             Assert.False(result.IsSuccess);
             Assert.NotNull(result.MsgError);
