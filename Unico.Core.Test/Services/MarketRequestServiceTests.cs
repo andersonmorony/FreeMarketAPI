@@ -128,6 +128,35 @@ namespace Unico.Core.Test.Services
             Assert.Equal("EDITED VILA", result.marketResponse.DISTRITO);
 
         }
+        [Fact]
+        public async void ShouldReturnMarketByParams()
+        {
+            var options = new DbContextOptionsBuilder<AppDbContext>().UseInMemoryDatabase(nameof(ShouldReturnMarketByParams)).Options;
+            var dbContext = new AppDbContext(options);
+            seedData(dbContext);
+            var marketService = new MarketService(dbContext, _mapper, null);
+
+            var result = await marketService.GetMarketsByNameAync("VILA FONSECA");
+
+            Assert.True(result.IsSuccess);
+            Assert.Null(result.MsgError);
+            Assert.Equal(2, result.marketResponse.Count());
+        }
+        [Fact]
+        public async void ShouldNotReturnMarketByInvalidParams()
+        {
+            var options = new DbContextOptionsBuilder<AppDbContext>().UseInMemoryDatabase(nameof(ShouldReturnMarketByParams)).Options;
+            var dbContext = new AppDbContext(options);
+            seedData(dbContext);
+            var marketService = new MarketService(dbContext, _mapper, null);
+
+            var result = await marketService.GetMarketsByNameAync("Invalid_Name");
+
+            Assert.False(result.IsSuccess);
+            Assert.Null(result.marketResponse);
+            Assert.NotNull(result.MsgError);
+            Assert.Equal("Not found", result.MsgError);
+        }
         private void seedData(AppDbContext _dbContext)
         {
             if (!_dbContext.Markets.Any())
@@ -135,6 +164,7 @@ namespace Unico.Core.Test.Services
                 _dbContext.Markets.AddRange(new List<Market>()
                 {
                     new Market() { Id = 1, LONG = "-46550164", SETCENS = 355030885000091, AREAP = 3550308005040, CODDIST = 87, DISTRITO = "VILA", CODSUBPREF = 26, SUBPREFE = "VILA PRUDENTE", REGIAO5 = "LESTE", REGIAO8 = "LESTE 1", NOME_FEIRA = "VILA FONSECA", REGISTRO = "4041-0", LOGRADOURO = "RUA X", BAIRRO = "SP", LAT = "-23558733", NUMERO = 15, REFERENCIA = "" },
+                    new Market() { Id = 3, LONG = "-46550164", SETCENS = 355030885000091, AREAP = 3550308005040, CODDIST = 87, DISTRITO = "VILA", CODSUBPREF = 26, SUBPREFE = "VILA PRUDENTE", REGIAO5 = "LESTE", REGIAO8 = "LESTE 1", NOME_FEIRA = "VILA FONSECA", REGISTRO = "4041-0", LOGRADOURO = "RUA X", BAIRRO = "SP", LAT = "-23558733", NUMERO = 15, REFERENCIA = "" },
                     new Market() { Id = 2, LONG = "-4655024", SETCENS = 35503020091, AREAP = 1308005040, CODDIST = 17, DISTRITO = "SAO MIGUEL", CODSUBPREF = 26, SUBPREFE = "VILA PRUDENTE", REGIAO5 = "LESTE", REGIAO8 = "LESTE 1", NOME_FEIRA = "VILA SAO MIGUEL", REGISTRO = "4041-2", LOGRADOURO = "RUA X", BAIRRO = "SP", LAT = "-23558733", NUMERO = 15, REFERENCIA = "" }
                 });
                 _dbContext.SaveChanges();

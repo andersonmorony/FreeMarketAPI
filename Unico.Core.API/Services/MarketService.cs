@@ -116,5 +116,29 @@ namespace Unico.Core.API.Services
                 return (null, false, ex.Message);
             }
         }
+
+        public async Task<(IEnumerable<MarketResponse> marketResponse, bool IsSuccess, string MsgError)> GetMarketsByNameAync(string marketName)
+        {
+            try
+            {
+                _logger?.LogInformation("GetMarketsByNameAync was called");
+                var markets = await _dbContext.Markets.Where(m => m.NOME_FEIRA == marketName).ToListAsync();
+
+                if (markets.Any())
+                {
+                    var response = _mapper.Map<IEnumerable<MarketResponse>>(markets);
+
+                    return (response, true, null);
+                }
+                _logger?.LogInformation("GetMarketsByNameAync was called, but items not found");
+                return (null, false, "Not found");
+            }
+            catch (Exception ex)
+            {
+                _logger?.LogError(ex.ToString());
+                return (null, false, ex.Message);
+            }
+            
+        }
     }
 }
