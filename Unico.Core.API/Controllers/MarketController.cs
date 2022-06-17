@@ -93,7 +93,7 @@ namespace Unico.Core.API.Controllers
             }
         }
         [HttpDelete("{id}")]
-        public async Task<IActionResult> EditMarket(int id)
+        public async Task<IActionResult> DeleteMarket(int id)
         {
             try
             {
