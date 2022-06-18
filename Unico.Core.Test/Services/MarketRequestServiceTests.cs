@@ -23,6 +23,7 @@ namespace Unico.Core.Test.Services
     {
         private readonly Mapper _mapper;
 
+
         public MarketRequestServiceTests()
         {
             var marketProfile = new MarketProfile();
@@ -33,34 +34,52 @@ namespace Unico.Core.Test.Services
         [Fact]
         public async void ShouldReturnMarket()
         {
+            // Arrange
             var options = new DbContextOptionsBuilder<AppDbContext>().UseInMemoryDatabase(nameof(ShouldReturnMarket)).Options;
             var dbContext = new AppDbContext(options);
             seedData(dbContext);
             var respository = new MarketRepository(dbContext);
-
             var marketService = new MarketService(_mapper, null, respository);
 
+            // Act
             var result = await marketService.GetMarketsAsync();
 
+            // Assert
             Assert.True(result.IsSuccess);
-
             Assert.True(result.markets.Any());
-
             Assert.Null(result.MsgError);
+
+        }
+        [Fact]
+        public async void ShouldReturnException()
+        {
+            // Arrange
+            var InvalidOptions = new DbContextOptionsBuilder<AppDbContext>().Options;
+            var dbContext = new AppDbContext(InvalidOptions);
+            var respository = new MarketRepository(dbContext);
+            var marketService = new MarketService(_mapper, null, respository);
+
+            // Act
+            var result = await marketService.GetMarketsAsync();
+
+            // Assert
+            Assert.False(result.IsSuccess);
+            Assert.NotNull(result.MsgError);
 
         }
         [Fact]
         public async void ShouldReturnFalseToNoData()
         {
+            // Arrange
             var options = new DbContextOptionsBuilder<AppDbContext>().UseInMemoryDatabase(nameof(ShouldReturnFalseToNoData)).Options;
             var dbContext = new AppDbContext(options);
-
             var respository = new MarketRepository(dbContext);
-
             var marketService = new MarketService(_mapper, null, respository);
 
+            // Act
             var result = await marketService.GetMarketsAsync();
 
+            // Assert
             Assert.False(result.IsSuccess);
             Assert.Null(result.markets);
             Assert.NotNull(result.MsgError);
@@ -68,18 +87,18 @@ namespace Unico.Core.Test.Services
         [Fact]
         public async void ShouldCreateMarket()
         {
+
+            // Arrange
             var options = new DbContextOptionsBuilder<AppDbContext>().UseInMemoryDatabase(nameof(ShouldCreateMarket)).Options;
-
             var dbContext = new AppDbContext(options);
-
             var respository = new MarketRepository(dbContext);
-
             var _marketService = new MarketService(_mapper, null, respository);
-
             var request = new MarketRequest() { LONG = "-46550164", SETCENS = 355030885000091, AREAP = 3550308005040, CODDIST = 87, DISTRITO = "VILA", CODSUBPREF = 26, SUBPREFE = "VILA PRUDENTE", REGIAO5 = "LESTE", REGIAO8 = "LESTE 1", NOME_FEIRA = "VILA FONSECA", REGISTRO = "4041-0", LOGRADOURO = "RUA X", BAIRRO = "SP", LAT = "-23558733", NUMERO = "15", REFERENCIA = "" };
 
+            // Act
             var result = await _marketService.CreateMarketAsync(request);
 
+            // Assert
             Assert.True(result.IsSuccess);
             Assert.Null(result.MsgError);
             Assert.NotNull(result.markets);
@@ -88,39 +107,73 @@ namespace Unico.Core.Test.Services
 
         }
         [Fact]
+        public async void ShouldNotCreateMarket()
+        {
+
+            // Arrange
+            var InvalidOptions = new DbContextOptionsBuilder<AppDbContext>().Options;
+            var dbContext = new AppDbContext(InvalidOptions);
+            var respository = new MarketRepository(dbContext);
+            var _marketService = new MarketService(_mapper, null, respository);
+            var request = new MarketRequest() { LONG = "-46550164", SETCENS = 355030885000091, AREAP = 3550308005040, CODDIST = 87, DISTRITO = "VILA", CODSUBPREF = 26, SUBPREFE = "VILA PRUDENTE", REGIAO5 = "LESTE", REGIAO8 = "LESTE 1", NOME_FEIRA = "VILA FONSECA", REGISTRO = "4041-0", LOGRADOURO = "RUA X", BAIRRO = "SP", LAT = "-23558733", NUMERO = "15", REFERENCIA = "" };
+
+            // Act
+            var result = await _marketService.CreateMarketAsync(request);
+
+            // Assert
+            Assert.False(result.IsSuccess);
+            Assert.NotNull(result.MsgError);
+            Assert.Null(result.markets);
+
+        }
+        [Fact]
         public async void ShoudDeleteMarket()
         {
+            // Arrange
             var options = new DbContextOptionsBuilder<AppDbContext>().UseInMemoryDatabase(nameof(ShoudDeleteMarket)).Options;
-
             var dbContext = new AppDbContext(options);
-
             seedData(dbContext);
-
-            
             var respository = new MarketRepository(dbContext);
-
             var _marketService = new MarketService(_mapper, null, respository);
 
+            // Act
             var result = await _marketService.DeleteMarketAsync(1);
 
+            //Assert
             Assert.True(result.IsSuccess);
             Assert.Null(result.MsgError);
         }
         [Fact]
-        public async void ShoudNotDeleteMarket()
+        public async void ShoudThrowErrorDeleteMarket()
         {
-            var options = new DbContextOptionsBuilder<AppDbContext>().UseInMemoryDatabase(nameof(ShoudNotDeleteMarket)).Options;
-
-            var dbContext = new AppDbContext(options);
-
-            seedData(dbContext);
-
+            // Arrange
+            var InvalidOptions = new DbContextOptionsBuilder<AppDbContext>().Options;
+            var dbContext = new AppDbContext(InvalidOptions);
             var respository = new MarketRepository(dbContext);
-
             var _marketService = new MarketService(_mapper, null, respository);
 
+            // Act
+            var result = await _marketService.DeleteMarketAsync(1);
+
+            //Assert
+            Assert.False(result.IsSuccess);
+            Assert.NotNull(result.MsgError);
+        }
+
+        [Fact]
+        public async void ShoudNotDeleteMarket()
+        {
+            // Arrange
+            var options = new DbContextOptionsBuilder<AppDbContext>().UseInMemoryDatabase(nameof(ShoudNotDeleteMarket)).Options;
+            var dbContext = new AppDbContext(options);
+            seedData(dbContext);
+            var respository = new MarketRepository(dbContext);
+            var _marketService = new MarketService(_mapper, null, respository);
+
+            // Act
             var result = await _marketService.DeleteMarketAsync(-1);
 
+            // Assert
             Assert.False(result.IsSuccess);
             Assert.NotNull(result.MsgError);
             Assert.Equal("Not Found", result.MsgError);
@@ -128,18 +181,18 @@ namespace Unico.Core.Test.Services
         [Fact]
         public async void ShouldEditItem()
         {
+            // Arrange
             var options = new DbContextOptionsBuilder<AppDbContext>().UseInMemoryDatabase(nameof(ShouldEditItem)).Options;
             var dbContext = new AppDbContext(options);
             seedData(dbContext);
-
             var respository = new MarketRepository(dbContext);
-
             var marketService = new MarketService(_mapper, null, respository);
-
             var request = new MarketRequest() { LONG = "-1111111", SETCENS = 355030885000091, AREAP = 3550308005040, CODDIST = 87, DISTRITO = "EDITED VILA", CODSUBPREF = 26, SUBPREFE = "VILA PRUDENTE", REGIAO5 = "LESTE", REGIAO8 = "LESTE 1", NOME_FEIRA = "VILA FONSECA", REGISTRO = "4041-0", LOGRADOURO = "RUA X", BAIRRO = "SP", LAT = "-23558733", NUMERO = "15", REFERENCIA = "" };
 
+            // Act
             var result = await marketService.EditMarketAsync(1, request);
 
+            // Assert
             Assert.True(result.IsSuccess);
             Assert.Null(result.MsgError);
             Assert.Equal(1, result.marketResponse.Id);
@@ -149,33 +202,93 @@ namespace Unico.Core.Test.Services
 
         }
         [Fact]
+        public async void ShouldNotEditItemWithInvalidID()
+        {
+            // Arrange
+            var options = new DbContextOptionsBuilder<AppDbContext>().UseInMemoryDatabase(nameof(ShouldEditItem)).Options;
+            var dbContext = new AppDbContext(options);
+            seedData(dbContext);
+            var respository = new MarketRepository(dbContext);
+            var marketService = new MarketService(_mapper, null, respository);
+            var request = new MarketRequest() { LONG = "-1111111", SETCENS = 355030885000091, AREAP = 3550308005040, CODDIST = 87, DISTRITO = "EDITED VILA", CODSUBPREF = 26, SUBPREFE = "VILA PRUDENTE", REGIAO5 = "LESTE", REGIAO8 = "LESTE 1", NOME_FEIRA = "VILA FONSECA", REGISTRO = "4041-0", LOGRADOURO = "RUA X", BAIRRO = "SP", LAT = "-23558733", NUMERO = "15", REFERENCIA = "" };
+
+            // Act
+            var result = await marketService.EditMarketAsync(-1, request);
+
+            // Assert
+            Assert.False(result.IsSuccess);
+            Assert.NotNull(result.MsgError);
+
+        }
+        [Fact]
+        public async void ShouldThrowErrorEditItem()
+        {
+            // Arrange
+            var InvalidOptions = new DbContextOptionsBuilder<AppDbContext>().Options;
+            var dbContext = new AppDbContext(InvalidOptions);
+            var respository = new MarketRepository(dbContext);
+            var marketService = new MarketService(_mapper, null, respository);
+            var request = new MarketRequest() { LONG = "-1111111", SETCENS = 355030885000091, AREAP = 3550308005040, CODDIST = 87, DISTRITO = "EDITED VILA", CODSUBPREF = 26, SUBPREFE = "VILA PRUDENTE", REGIAO5 = "LESTE", REGIAO8 = "LESTE 1", NOME_FEIRA = "VILA FONSECA", REGISTRO = "4041-0", LOGRADOURO = "RUA X", BAIRRO = "SP", LAT = "-23558733", NUMERO = "15", REFERENCIA = "" };
+
+            // Act
+            var result = await marketService.EditMarketAsync(1, request);
+
+            // Assert
+            Assert.False(result.IsSuccess);
+            Assert.NotNull(result.MsgError);
+            Assert.Null(result.marketResponse);
+
+
+        }
+        [Fact]
         public async void ShouldReturnMarketByParams()
         {
+            // Arrange
             var options = new DbContextOptionsBuilder<AppDbContext>().UseInMemoryDatabase(nameof(ShouldReturnMarketByParams)).Options;
             var dbContext = new AppDbContext(options);
             seedData(dbContext);
             var respository = new MarketRepository(dbContext);
-
             var marketService = new MarketService(_mapper, null, respository);
 
+            // Act
             var result = await marketService.GetMarketsByNameAync("VILA FONSECA");
 
+            // Assert
             Assert.True(result.IsSuccess);
             Assert.Null(result.MsgError);
             Assert.Equal(2, result.marketResponse.Count());
         }
         [Fact]
+        public async void ShouldThrowErrorReturnMarketByParams()
+        {
+            // Arrange
+            var InvalidOptions = new DbContextOptionsBuilder<AppDbContext>().Options;
+            var dbContext = new AppDbContext(InvalidOptions);
+            var respository = new MarketRepository(dbContext);
+            var marketService = new MarketService(_mapper, null, respository);
+
+            // Act
+            var result = await marketService.GetMarketsByNameAync("VILA FONSECA");
+
+            // Assert
+            Assert.False(result.IsSuccess);
+            Assert.NotNull(result.MsgError);
+            Assert.Null(result.marketResponse);
+        }
+        [Fact]
         public async void ShouldNotReturnMarketByInvalidParams()
         {
+            // Arrange
             var options = new DbContextOptionsBuilder<AppDbContext>().UseInMemoryDatabase(nameof(ShouldReturnMarketByParams)).Options;
             var dbContext = new AppDbContext(options);
             seedData(dbContext);
             var respository = new MarketRepository(dbContext);
-
             var marketService = new MarketService(_mapper, null, respository);
 
+            // Act
             var result = await marketService.GetMarketsByNameAync("Invalid_Name");
 
+            // Assert
             Assert.False(result.IsSuccess);
             Assert.Null(result.marketResponse);
             Assert.NotNull(result.MsgError);
@@ -184,32 +297,54 @@ namespace Unico.Core.Test.Services
         [Fact]
         public async void ShouldUploadCSV()
         {
+            // Arrange
             var options = new DbContextOptionsBuilder<AppDbContext>().UseInMemoryDatabase(nameof(ShouldUploadCSV)).Options;
             var dbContext = new AppDbContext(options);
             var filename = "DEINFO_AB_FEIRASLIVRES_2014.csv";
-
-
             #region Read CSV
             List<MarketCsv> markets = NewMethod(filename);
             #endregion
-
             var respository = new MarketRepository(dbContext);
-
             var marketService = new MarketService(_mapper, null, respository);
 
+            // Act
             var result = await marketService.UploadCsvToCreateMarkets(markets);
 
+            // Assert
+            Assert.NotNull(markets);
             Assert.True(result.IsSuccess);
             Assert.NotNull(result.marketResponse);
             Assert.Equal(880, result.marketResponse.Count());
             Assert.Null(result.MsgError);
         }
+        [Fact]
+        public async void ShoulThrowErrordUploadCSV()
+        {
+            // Arrange
+            var InvalidOptions = new DbContextOptionsBuilder<AppDbContext>().Options;
+            var dbContext = new AppDbContext(InvalidOptions);
+            var filename = "DEINFO_AB_FEIRASLIVRES_2014.csv";
+            #region Read CSV
+            List<MarketCsv> markets = NewMethod(filename);
+            #endregion
+            var respository = new MarketRepository(dbContext);
+            var marketService = new MarketService(_mapper, null, respository);
 
-      
+            // Act
+            var result = await marketService.UploadCsvToCreateMarkets(markets);
+
+            // Assert
+            Assert.NotNull(markets);
+            Assert.False(result.IsSuccess);
+            Assert.NotNull(result.MsgError);
+        }
+
+
 
         [Fact]
         public async void ShoulNotdUploadCSV()
         {
+            // Arrange
             var options = new DbContextOptionsBuilder<AppDbContext>().UseInMemoryDatabase(nameof(ShoulNotdUploadCSV)).Options;
             var dbContext = new AppDbContext(options);
             var filename = "Invalid.csv";
@@ -217,20 +352,22 @@ namespace Unico.Core.Test.Services
 
             try
             {
+                // Arrange
                 #region Read CSV
                 List<MarketCsv> markets = NewMethod(filename);
                 #endregion
-
                 var respository = new MarketRepository(dbContext);
-
                 var marketService = new MarketService(_mapper, null, respository);
 
+                // Act
                 var result = await marketService.UploadCsvToCreateMarkets(markets);
 
             }
             catch (Exception ex)
             {
+                // Assert
                 Assert.NotNull(ex.Message);
+
             }
 
         }

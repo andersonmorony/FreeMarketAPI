@@ -1,0 +1,72 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Unico.Core.API</name>
+    </assembly>
+    <members>
+        <member name="M:Unico.Core.API.Controllers.MarketController.GetAllMarkets">
+            <summary>
+            Return all Markets.
+            </summary>
+            <returns>Items in Market List</returns>
+            <response code="200">Return all Markets</response>
+        </member>
+        <member name="M:Unico.Core.API.Controllers.MarketController.GetMarketByName(System.String)">
+            <summary>
+            Return some Markets by Name.
+            </summary>
+            <returns>Items in Market List</returns>
+            <param name="name">Market name</param>
+            <response code="200">Return some markets</response>
+        </member>
+        <member name="M:Unico.Core.API.Controllers.MarketController.CreateMarket(Unico.Core.API.Models.MarketRequest)">
+             <summary>
+             Add a new Market to list.
+             </summary>
+             <remarks>
+             Exemplo:
+            
+                 POST / Market
+                {
+                "id": 1,
+                "long": "-46550164",
+                "lat": "-23558733",
+                "setcens": 355030885000091,
+                "areap": 3550308005040,
+                "coddist": 87,
+                "distrito": "VILA FORMOSA",
+                "codsubpref": 26,
+                "subprefe": "ARICANDUVA-FORMOSA-CARRAO",
+                "regiaO5": "Leste",
+                "regiaO8": "Leste 1",
+                "nomE_FEIRA": "VILA FORMOSA",
+                "registro": "4041-0",
+                "logradouro": "RUA MARAGOJIPE",
+                "numero": "S/N",
+               "bairro": "VL FORMOSA",
+                "referencia": "TV RUA PRETORIA"
+                }
+            
+             </remarks>
+             <returns>Items Createdt</returns>
+             <response code="201">Return the item created</response>
+        </member>
+        <member name="M:Unico.Core.API.Controllers.MarketController.EditMarket(System.Int32,Unico.Core.API.Models.MarketRequest)">
+            <summary>
+            Edit Market by Param ID.
+            </summary>
+            <returns>Market Updated</returns>
+            <param name="id">Market Identifie</param>
+            <param name="request">Market Obcjet</param>
+            <response code="200">Return Market Updated</response>
+        </member>
+        <member name="M:Unico.Core.API.Controllers.MarketController.DeleteMarket(System.Int32)">
+            <summary>
+            Delete Market by Param ID.
+            </summary>
+            <returns>Nothing</returns>
+            <param name="id">Market Identifie</param>
+            <response code="204">Not return values</response>
+        </member>
+    </members>
+</doc>

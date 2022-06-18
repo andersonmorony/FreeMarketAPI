@@ -1,0 +1,6 @@
+2022-06-18T07:58:19.2384650-03:00  [INF] Application started. Press Ctrl+C to shut down. (dcaefe54)
+2022-06-18T07:58:19.3771967-03:00  [INF] Hosting environment: "Development" (c3307c92)
+2022-06-18T07:58:19.4001299-03:00  [INF] Content root path: "C:\Users\a.de.souza.ramos\source\repos\Unico\Unico.Core.API" (b5d60022)
+2022-06-18T07:58:30.5183042-03:00 4000008a-0006-f600-b63f-84710c7967bb [INF] GetMarketsAsync was called (894d5d76)
+2022-06-18T07:58:31.9379629-03:00 4000008a-0006-f600-b63f-84710c7967bb [INF] GetMarketsAsync was called but no data (ed04b309)
+2022-06-18T07:59:01.3842647-03:00 4000004a-0004-fe00-b63f-84710c7967bb [INF] UploadCsvToCreateMarkets was called (ebcb303e)

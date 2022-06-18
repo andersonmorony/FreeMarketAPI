@@ -48,3 +48,11 @@ C:\Users\a.de.souza.ramos\source\repos\Unico\Unico.Core.API\obj\Debug\net5.0\ref
 C:\Users\a.de.souza.ramos\source\repos\Unico\Unico.Core.API\obj\Debug\net5.0\Unico.Core.API.pdb
 C:\Users\a.de.souza.ramos\source\repos\Unico\Unico.Core.API\obj\Debug\net5.0\Unico.Core.API.genruntimeconfig.cache
 C:\Users\a.de.souza.ramos\source\repos\Unico\Unico.Core.API\obj\Debug\net5.0\Unico.Core.API.csprojAssemblyReference.cache
+C:\Users\a.de.souza.ramos\source\repos\Unico\Unico.Core.API\bin\Debug\net5.0\Unico.Core.API.xml
+C:\Users\a.de.souza.ramos\source\repos\Unico\Unico.Core.API\bin\Debug\net5.0\Serilog.dll
+C:\Users\a.de.souza.ramos\source\repos\Unico\Unico.Core.API\bin\Debug\net5.0\Serilog.Extensions.Logging.dll
+C:\Users\a.de.souza.ramos\source\repos\Unico\Unico.Core.API\bin\Debug\net5.0\Serilog.Extensions.Logging.File.dll
+C:\Users\a.de.souza.ramos\source\repos\Unico\Unico.Core.API\bin\Debug\net5.0\Serilog.Formatting.Compact.dll
+C:\Users\a.de.souza.ramos\source\repos\Unico\Unico.Core.API\bin\Debug\net5.0\Serilog.Sinks.Async.dll
+C:\Users\a.de.souza.ramos\source\repos\Unico\Unico.Core.API\bin\Debug\net5.0\Serilog.Sinks.File.dll
+C:\Users\a.de.souza.ramos\source\repos\Unico\Unico.Core.API\bin\Debug\net5.0\Serilog.Sinks.RollingFile.dll
