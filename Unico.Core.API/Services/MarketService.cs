@@ -180,6 +180,7 @@ namespace Unico.Core.API.Services
 
                 IEnumerable<MarketCsv> marketResponseMapped = _mapper.Map<IEnumerable<MarketCsv>>(marketRequest);
 
+                _logger?.LogInformation($"UploadCsvToCreateMarkets was Added {marketResponse.Count()} Market to DataBase ");
                 return (marketResponseMapped, true, null);
                     
             }
