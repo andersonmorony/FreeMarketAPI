@@ -9,6 +9,8 @@ using Unico.Core.API.Data;
 using AutoMapper;
 using Unico.Core.API.ServicesInterface;
 using Unico.Core.API.Services;
+using Unico.Core.API.RepositoryInterface;
+using Unico.Core.API.Repository;
 
 namespace Unico.Core.API
 {
@@ -25,6 +27,7 @@ namespace Unico.Core.API
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddScoped<IMarketServices, MarketService>();
+            services.AddScoped<IMarketRepository, MarketRepository>();
 
             services.AddDbContext<AppDbContext>(options =>
             {

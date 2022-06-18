@@ -8,21 +8,22 @@ using System.Linq;
 using System.Threading.Tasks;
 using Unico.Core.API.Data;
 using Unico.Core.API.Models;
+using Unico.Core.API.RepositoryInterface;
 using Unico.Core.API.ServicesInterface;
 
 namespace Unico.Core.API.Services
 {
     public  class MarketService : IMarketServices
     {
-        private readonly AppDbContext _dbContext;
         private readonly IMapper _mapper;
         private readonly ILogger _logger;
+        private readonly IMarketRepository _marketRepository;
 
-        public MarketService(AppDbContext dbContext, IMapper mapper, ILogger<MarketService> logger)
+        public MarketService(IMapper mapper, ILogger<MarketService> logger, IMarketRepository marketRepository)
         {
-            _dbContext = dbContext;
             _mapper = mapper;
             _logger = logger;
+            _marketRepository = marketRepository;
         }
 
         public async Task<(IEnumerable<MarketResponse> markets, bool IsSuccess, string MsgError)> GetMarketsAsync()
@@ -30,7 +31,7 @@ namespace Unico.Core.API.Services
             _logger?.LogInformation("GetMarketsAsync was called");
             try
             {
-                var result = await _dbContext.Markets.ToListAsync();
+                var result = await _marketRepository.GetMarketsAsync();
                 if (result.Any())
                 {
                     var response = _mapper.Map<IEnumerable<MarketResponse>>(result);
@@ -52,12 +53,11 @@ namespace Unico.Core.API.Services
             var model = _mapper.Map<Market>(request);
             try
             {
-                _dbContext.Markets.Add(model);
-                _dbContext.SaveChanges();
+                var response = await _marketRepository.AddMarketAsync(model);
                 _logger?.LogInformation("CreateMarketAsync was called and Market was created");
 
-                var response = _mapper.Map<MarketResponse>(model);
-                return (response, true, null);
+                var responseMapped = _mapper.Map<MarketResponse>(response);
+                return (responseMapped, true, null);
 
             }catch(Exception ex)
             {
@@ -72,12 +72,11 @@ namespace Unico.Core.API.Services
             try
             {
                 _logger?.LogInformation("DeleteMarketAsync was called");
-                var market = _dbContext.Markets.FirstOrDefault(m => m.Id == id);
+                Market market = await _marketRepository.GetMarketByIdAsync(id);
 
                 if(market != null)
                 {
-                    _dbContext.Markets.Remove(market);
-                    await _dbContext.SaveChangesAsync();
+                    await _marketRepository.DeleteMarketAsync(market);
                     _logger?.LogInformation($"DeleteMarketAsync was called and item with codReg {id} was Deleted");
                     return (true, null);
                 }
@@ -96,12 +95,11 @@ namespace Unico.Core.API.Services
             {
                 _logger?.LogInformation("EditMarketAsync was called");
 
-                var market = _dbContext.Markets.FirstOrDefault(m => m.Id == Id);
+                Market market = await _marketRepository.GetMarketByIdAsync(Id);
 
-                if(market != null)
+                if (market != null)
                 {
-                    _mapper.Map(marketRequest, market);
-                    await _dbContext.SaveChangesAsync();
+                    await _marketRepository.UpdateMarketAsync(_mapper.Map(marketRequest, market));
 
                     var marketEdited = _mapper.Map<MarketResponse>(market);
                     _logger?.LogInformation($"EditMarketAsync was called and Edite the market with Id {Id}");
@@ -123,7 +121,7 @@ namespace Unico.Core.API.Services
             try
             {
                 _logger?.LogInformation("GetMarketsByNameAync was called");
-                var markets = await _dbContext.Markets.Where(m => m.NOME_FEIRA == marketName).ToListAsync();
+                var markets = await _marketRepository.GetMarketsByNameAsync(marketName);
 
                 if (markets.Any())
                 {
@@ -147,14 +145,13 @@ namespace Unico.Core.API.Services
             {
                 _logger?.LogInformation("UploadCsvToCreateMarkets was called");
 
-                var marketRequest = _mapper.Map<IEnumerable<Market>>(request);
-                    
-                await _dbContext.Markets.AddRangeAsync(marketRequest);
-                await _dbContext.SaveChangesAsync();
+                IEnumerable<Market> marketRequest = _mapper.Map<IEnumerable<Market>>(request);
 
-                var marketResponse = _mapper.Map<IEnumerable<MarketCsv>>(marketRequest);
+                IEnumerable<Market> marketResponse = await _marketRepository.AddRangeMarketsAsync(marketRequest);
 
-                return (marketResponse, true, null);
+                IEnumerable<MarketCsv> marketResponseMapped = _mapper.Map<IEnumerable<MarketCsv>>(marketRequest);
+
+                return (marketResponseMapped, true, null);
                     
             }
             catch (Exception ex)

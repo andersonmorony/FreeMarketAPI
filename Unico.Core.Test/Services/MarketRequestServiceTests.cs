@@ -13,6 +13,7 @@ using System.Threading.Tasks;
 using Unico.Core.API.Data;
 using Unico.Core.API.Models;
 using Unico.Core.API.Profiles;
+using Unico.Core.API.Repository;
 using Unico.Core.API.Services;
 using Xunit;
 
@@ -35,9 +36,11 @@ namespace Unico.Core.Test.Services
             var options = new DbContextOptionsBuilder<AppDbContext>().UseInMemoryDatabase(nameof(ShouldReturnMarket)).Options;
             var dbContext = new AppDbContext(options);
             seedData(dbContext);
-            var _marketService = new MarketService(dbContext, _mapper, null);
+            var respository = new MarketRepository(dbContext);
 
-            var result = await _marketService.GetMarketsAsync();
+            var marketService = new MarketService(_mapper, null, respository);
+
+            var result = await marketService.GetMarketsAsync();
 
             Assert.True(result.IsSuccess);
 
@@ -52,9 +55,11 @@ namespace Unico.Core.Test.Services
             var options = new DbContextOptionsBuilder<AppDbContext>().UseInMemoryDatabase(nameof(ShouldReturnFalseToNoData)).Options;
             var dbContext = new AppDbContext(options);
 
-            var _marketService = new MarketService(dbContext, _mapper, null);
+            var respository = new MarketRepository(dbContext);
 
-            var result = await _marketService.GetMarketsAsync();
+            var marketService = new MarketService(_mapper, null, respository);
+
+            var result = await marketService.GetMarketsAsync();
 
             Assert.False(result.IsSuccess);
             Assert.Null(result.markets);
@@ -67,7 +72,9 @@ namespace Unico.Core.Test.Services
 
             var dbContext = new AppDbContext(options);
 
-            var _marketService = new MarketService(dbContext, _mapper, null);
+            var respository = new MarketRepository(dbContext);
+
+            var _marketService = new MarketService(_mapper, null, respository);
 
             var request = new MarketRequest() { LONG = "-46550164", SETCENS = 355030885000091, AREAP = 3550308005040, CODDIST = 87, DISTRITO = "VILA", CODSUBPREF = 26, SUBPREFE = "VILA PRUDENTE", REGIAO5 = "LESTE", REGIAO8 = "LESTE 1", NOME_FEIRA = "VILA FONSECA", REGISTRO = "4041-0", LOGRADOURO = "RUA X", BAIRRO = "SP", LAT = "-23558733", NUMERO = "15", REFERENCIA = "" };
 
@@ -89,7 +96,10 @@ namespace Unico.Core.Test.Services
 
             seedData(dbContext);
 
-            var _marketService = new MarketService(dbContext, _mapper, null);
+            
+            var respository = new MarketRepository(dbContext);
+
+            var _marketService = new MarketService(_mapper, null, respository);
 
             var result = await _marketService.DeleteMarketAsync(1);
 
@@ -105,7 +115,9 @@ namespace Unico.Core.Test.Services
 
             seedData(dbContext);
 
-            var _marketService = new MarketService(dbContext, _mapper, null);
+            var respository = new MarketRepository(dbContext);
+
+            var _marketService = new MarketService(_mapper, null, respository);
 
             var result = await _marketService.DeleteMarketAsync(-1);
 
@@ -120,7 +132,9 @@ namespace Unico.Core.Test.Services
             var dbContext = new AppDbContext(options);
             seedData(dbContext);
 
-            var marketService = new MarketService(dbContext, _mapper, null);
+            var respository = new MarketRepository(dbContext);
+
+            var marketService = new MarketService(_mapper, null, respository);
 
             var request = new MarketRequest() { LONG = "-1111111", SETCENS = 355030885000091, AREAP = 3550308005040, CODDIST = 87, DISTRITO = "EDITED VILA", CODSUBPREF = 26, SUBPREFE = "VILA PRUDENTE", REGIAO5 = "LESTE", REGIAO8 = "LESTE 1", NOME_FEIRA = "VILA FONSECA", REGISTRO = "4041-0", LOGRADOURO = "RUA X", BAIRRO = "SP", LAT = "-23558733", NUMERO = "15", REFERENCIA = "" };
 
@@ -140,7 +154,9 @@ namespace Unico.Core.Test.Services
             var options = new DbContextOptionsBuilder<AppDbContext>().UseInMemoryDatabase(nameof(ShouldReturnMarketByParams)).Options;
             var dbContext = new AppDbContext(options);
             seedData(dbContext);
-            var marketService = new MarketService(dbContext, _mapper, null);
+            var respository = new MarketRepository(dbContext);
+
+            var marketService = new MarketService(_mapper, null, respository);
 
             var result = await marketService.GetMarketsByNameAync("VILA FONSECA");
 
@@ -154,7 +170,9 @@ namespace Unico.Core.Test.Services
             var options = new DbContextOptionsBuilder<AppDbContext>().UseInMemoryDatabase(nameof(ShouldReturnMarketByParams)).Options;
             var dbContext = new AppDbContext(options);
             seedData(dbContext);
-            var marketService = new MarketService(dbContext, _mapper, null);
+            var respository = new MarketRepository(dbContext);
+
+            var marketService = new MarketService(_mapper, null, respository);
 
             var result = await marketService.GetMarketsByNameAync("Invalid_Name");
 
@@ -175,7 +193,9 @@ namespace Unico.Core.Test.Services
             List<MarketCsv> markets = NewMethod(filename);
             #endregion
 
-            var marketService = new MarketService(dbContext, _mapper, null);
+            var respository = new MarketRepository(dbContext);
+
+            var marketService = new MarketService(_mapper, null, respository);
 
             var result = await marketService.UploadCsvToCreateMarkets(markets);
 
@@ -201,7 +221,9 @@ namespace Unico.Core.Test.Services
                 List<MarketCsv> markets = NewMethod(filename);
                 #endregion
 
-                var marketService = new MarketService(dbContext, _mapper, null);
+                var respository = new MarketRepository(dbContext);
+
+                var marketService = new MarketService(_mapper, null, respository);
 
                 var result = await marketService.UploadCsvToCreateMarkets(markets);
 
