@@ -170,9 +170,51 @@ namespace Unico.Core.Test.Services
             var dbContext = new AppDbContext(options);
             var filename = "DEINFO_AB_FEIRASLIVRES_2014.csv";
 
-            List<MarketCsv> markets = new List<MarketCsv>();
 
             #region Read CSV
+            List<MarketCsv> markets = NewMethod(filename);
+            #endregion
+
+            var marketService = new MarketService(dbContext, _mapper, null);
+
+            var result = await marketService.UploadCsvToCreateMarkets(markets);
+
+            Assert.True(result.IsSuccess);
+            Assert.NotNull(result.marketResponse);
+            Assert.Equal(880, result.marketResponse.Count());
+            Assert.Null(result.MsgError);
+        }
+
+      
+
+        [Fact]
+        public async void ShoulNotdUploadCSV()
+        {
+            var options = new DbContextOptionsBuilder<AppDbContext>().UseInMemoryDatabase(nameof(ShoulNotdUploadCSV)).Options;
+            var dbContext = new AppDbContext(options);
+            var filename = "Invalid.csv";
+
+
+            try
+            {
+                #region Read CSV
+                List<MarketCsv> markets = NewMethod(filename);
+                #endregion
+
+                var marketService = new MarketService(dbContext, _mapper, null);
+
+                var result = await marketService.UploadCsvToCreateMarkets(markets);
+
+            }
+            catch (Exception ex)
+            {
+                Assert.NotNull(ex.Message);
+            }
+
+        }
+        private static List<MarketCsv> NewMethod(string filename)
+        {
+            List<MarketCsv> markets = new List<MarketCsv>();
             var config = new CsvConfiguration(CultureInfo.InvariantCulture)
             {
                 MissingFieldFound = null
@@ -193,61 +235,8 @@ namespace Unico.Core.Test.Services
                     markets.Add(market);
                 }
             }
-            #endregion
 
-            var marketService = new MarketService(dbContext, _mapper, null);
-
-            var result = await marketService.UploadCsvToCreateMarkets(markets);
-
-            Assert.True(result.IsSuccess);
-            Assert.NotNull(result.marketResponse);
-            Assert.Equal(880, result.marketResponse.Count());
-            Assert.Null(result.MsgError);
-        }
-        [Fact]
-        public async void ShoulNotdUploadCSV()
-        {
-            var options = new DbContextOptionsBuilder<AppDbContext>().UseInMemoryDatabase(nameof(ShoulNotdUploadCSV)).Options;
-            var dbContext = new AppDbContext(options);
-            var filename = "Invalid.csv";
-
-            List<MarketCsv> markets = new List<MarketCsv>();
-
-            try
-            {
-                #region Read CSV
-                var config = new CsvConfiguration(CultureInfo.InvariantCulture)
-                {
-                    MissingFieldFound = null
-                };
-
-                var dirName = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location.Replace("bin\\Debug\\net5.0", string.Empty));
-                var path = $"{dirName}{@"\files"}" + "\\" + filename;
-
-                using (var reader = new StreamReader(path))
-                using (var csv = new CsvReader(reader, config))
-                {
-
-                    csv.Read();
-                    csv.ReadHeader();
-                    while (csv.Read())
-                    {
-                        var market = csv.GetRecord<MarketCsv>();
-                        markets.Add(market);
-                    }
-                }
-                #endregion
-
-                var marketService = new MarketService(dbContext, _mapper, null);
-
-                var result = await marketService.UploadCsvToCreateMarkets(markets);
-
-            }
-            catch (Exception ex)
-            {
-                Assert.NotNull(ex.Message);
-            }
-
+            return markets;
         }
         private void seedData(AppDbContext _dbContext)
         {
