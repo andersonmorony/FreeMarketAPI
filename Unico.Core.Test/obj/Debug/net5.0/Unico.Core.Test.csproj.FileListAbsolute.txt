@@ -126,3 +126,4 @@ C:\Users\a.de.souza.ramos\source\repos\Unico\Unico.Core.Test\bin\Debug\net5.0\Mi
 C:\Users\a.de.souza.ramos\source\repos\Unico\Unico.Core.Test\bin\Debug\net5.0\Microsoft.Extensions.Options.dll
 C:\Users\a.de.souza.ramos\source\repos\Unico\Unico.Core.Test\bin\Debug\net5.0\Microsoft.Extensions.Primitives.dll
 C:\Users\a.de.souza.ramos\source\repos\Unico\Unico.Core.Test\bin\Debug\net5.0\System.Runtime.CompilerServices.Unsafe.dll
+C:\Users\a.de.souza.ramos\source\repos\Unico\Unico.Core.Test\bin\Debug\net5.0\CsvHelper.dll

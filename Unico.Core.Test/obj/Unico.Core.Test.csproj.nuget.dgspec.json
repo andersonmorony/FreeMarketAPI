@@ -44,6 +44,10 @@
               "target": "Package",
               "version": "[11.0.0, )"
             },
+            "CsvHelper": {
+              "target": "Package",
+              "version": "[27.2.1, )"
+            },
             "Microsoft.AspNetCore.Authentication.JwtBearer": {
               "target": "Package",
               "version": "[5.0.1, )",
@@ -139,6 +143,10 @@
         "net5.0": {
           "targetAlias": "net5.0",
           "dependencies": {
+            "CsvHelper": {
+              "target": "Package",
+              "version": "[27.2.1, )"
+            },
             "Microsoft.EntityFrameworkCore": {
               "target": "Package",
               "version": "[5.0.0, )"

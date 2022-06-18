@@ -1,8 +1,14 @@
 ﻿using AutoMapper;
+using CsvHelper;
+using CsvHelper.Configuration;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using System;
 using System.Collections.Generic;
+using System.Globalization;
+using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 using Unico.Core.API.Data;
 using Unico.Core.API.Models;
@@ -63,7 +69,7 @@ namespace Unico.Core.Test.Services
 
             var _marketService = new MarketService(dbContext, _mapper, null);
 
-            var request = new MarketRequest() { LONG = "-46550164", SETCENS = 355030885000091, AREAP = 3550308005040, CODDIST = 87, DISTRITO = "VILA", CODSUBPREF = 26, SUBPREFE = "VILA PRUDENTE", REGIAO5 = "LESTE", REGIAO8 = "LESTE 1", NOME_FEIRA = "VILA FONSECA", REGISTRO = "4041-0", LOGRADOURO = "RUA X", BAIRRO = "SP", LAT = "-23558733", NUMERO = 15, REFERENCIA = "" };
+            var request = new MarketRequest() { LONG = "-46550164", SETCENS = 355030885000091, AREAP = 3550308005040, CODDIST = 87, DISTRITO = "VILA", CODSUBPREF = 26, SUBPREFE = "VILA PRUDENTE", REGIAO5 = "LESTE", REGIAO8 = "LESTE 1", NOME_FEIRA = "VILA FONSECA", REGISTRO = "4041-0", LOGRADOURO = "RUA X", BAIRRO = "SP", LAT = "-23558733", NUMERO = "15", REFERENCIA = "" };
 
             var result = await _marketService.CreateMarketAsync(request);
 
@@ -116,7 +122,7 @@ namespace Unico.Core.Test.Services
 
             var marketService = new MarketService(dbContext, _mapper, null);
 
-            var request = new MarketRequest() { LONG = "-1111111", SETCENS = 355030885000091, AREAP = 3550308005040, CODDIST = 87, DISTRITO = "EDITED VILA", CODSUBPREF = 26, SUBPREFE = "VILA PRUDENTE", REGIAO5 = "LESTE", REGIAO8 = "LESTE 1", NOME_FEIRA = "VILA FONSECA", REGISTRO = "4041-0", LOGRADOURO = "RUA X", BAIRRO = "SP", LAT = "-23558733", NUMERO = 15, REFERENCIA = "" };
+            var request = new MarketRequest() { LONG = "-1111111", SETCENS = 355030885000091, AREAP = 3550308005040, CODDIST = 87, DISTRITO = "EDITED VILA", CODSUBPREF = 26, SUBPREFE = "VILA PRUDENTE", REGIAO5 = "LESTE", REGIAO8 = "LESTE 1", NOME_FEIRA = "VILA FONSECA", REGISTRO = "4041-0", LOGRADOURO = "RUA X", BAIRRO = "SP", LAT = "-23558733", NUMERO = "15", REFERENCIA = "" };
 
             var result = await marketService.EditMarketAsync(1, request);
 
@@ -157,15 +163,101 @@ namespace Unico.Core.Test.Services
             Assert.NotNull(result.MsgError);
             Assert.Equal("Not found", result.MsgError);
         }
+        [Fact]
+        public async void ShouldUploadCSV()
+        {
+            var options = new DbContextOptionsBuilder<AppDbContext>().UseInMemoryDatabase(nameof(ShouldUploadCSV)).Options;
+            var dbContext = new AppDbContext(options);
+            var filename = "DEINFO_AB_FEIRASLIVRES_2014.csv";
+
+            List<MarketCsv> markets = new List<MarketCsv>();
+
+            #region Read CSV
+            var config = new CsvConfiguration(CultureInfo.InvariantCulture)
+            {
+                MissingFieldFound = null
+            };
+
+            var dirName = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location.Replace("bin\\Debug\\net5.0", string.Empty));
+            var path = $"{dirName}{@"\files"}" + "\\" + filename;
+
+            using (var reader = new StreamReader(path))
+            using (var csv = new CsvReader(reader, config))
+            {
+
+                csv.Read();
+                csv.ReadHeader();
+                while (csv.Read())
+                {
+                    var market = csv.GetRecord<MarketCsv>();
+                    markets.Add(market);
+                }
+            }
+            #endregion
+
+            var marketService = new MarketService(dbContext, _mapper, null);
+
+            var result = await marketService.UploadCsvToCreateMarkets(markets);
+
+            Assert.True(result.IsSuccess);
+            Assert.NotNull(result.marketResponse);
+            Assert.Equal(880, result.marketResponse.Count());
+            Assert.Null(result.MsgError);
+        }
+        [Fact]
+        public async void ShoulNotdUploadCSV()
+        {
+            var options = new DbContextOptionsBuilder<AppDbContext>().UseInMemoryDatabase(nameof(ShoulNotdUploadCSV)).Options;
+            var dbContext = new AppDbContext(options);
+            var filename = "Invalid.csv";
+
+            List<MarketCsv> markets = new List<MarketCsv>();
+
+            try
+            {
+                #region Read CSV
+                var config = new CsvConfiguration(CultureInfo.InvariantCulture)
+                {
+                    MissingFieldFound = null
+                };
+
+                var dirName = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location.Replace("bin\\Debug\\net5.0", string.Empty));
+                var path = $"{dirName}{@"\files"}" + "\\" + filename;
+
+                using (var reader = new StreamReader(path))
+                using (var csv = new CsvReader(reader, config))
+                {
+
+                    csv.Read();
+                    csv.ReadHeader();
+                    while (csv.Read())
+                    {
+                        var market = csv.GetRecord<MarketCsv>();
+                        markets.Add(market);
+                    }
+                }
+                #endregion
+
+                var marketService = new MarketService(dbContext, _mapper, null);
+
+                var result = await marketService.UploadCsvToCreateMarkets(markets);
+
+            }
+            catch (Exception ex)
+            {
+                Assert.NotNull(ex.Message);
+            }
+
+        }
         private void seedData(AppDbContext _dbContext)
         {
             if (!_dbContext.Markets.Any())
             {
                 _dbContext.Markets.AddRange(new List<Market>()
                 {
-                    new Market() { Id = 1, LONG = "-46550164", SETCENS = 355030885000091, AREAP = 3550308005040, CODDIST = 87, DISTRITO = "VILA", CODSUBPREF = 26, SUBPREFE = "VILA PRUDENTE", REGIAO5 = "LESTE", REGIAO8 = "LESTE 1", NOME_FEIRA = "VILA FONSECA", REGISTRO = "4041-0", LOGRADOURO = "RUA X", BAIRRO = "SP", LAT = "-23558733", NUMERO = 15, REFERENCIA = "" },
-                    new Market() { Id = 3, LONG = "-46550164", SETCENS = 355030885000091, AREAP = 3550308005040, CODDIST = 87, DISTRITO = "VILA", CODSUBPREF = 26, SUBPREFE = "VILA PRUDENTE", REGIAO5 = "LESTE", REGIAO8 = "LESTE 1", NOME_FEIRA = "VILA FONSECA", REGISTRO = "4041-0", LOGRADOURO = "RUA X", BAIRRO = "SP", LAT = "-23558733", NUMERO = 15, REFERENCIA = "" },
-                    new Market() { Id = 2, LONG = "-4655024", SETCENS = 35503020091, AREAP = 1308005040, CODDIST = 17, DISTRITO = "SAO MIGUEL", CODSUBPREF = 26, SUBPREFE = "VILA PRUDENTE", REGIAO5 = "LESTE", REGIAO8 = "LESTE 1", NOME_FEIRA = "VILA SAO MIGUEL", REGISTRO = "4041-2", LOGRADOURO = "RUA X", BAIRRO = "SP", LAT = "-23558733", NUMERO = 15, REFERENCIA = "" }
+                    new Market() { Id = 1, LONG = "-46550164", SETCENS = 355030885000091, AREAP = 3550308005040, CODDIST = 87, DISTRITO = "VILA", CODSUBPREF = 26, SUBPREFE = "VILA PRUDENTE", REGIAO5 = "LESTE", REGIAO8 = "LESTE 1", NOME_FEIRA = "VILA FONSECA", REGISTRO = "4041-0", LOGRADOURO = "RUA X", BAIRRO = "SP", LAT = "-23558733", NUMERO = "", REFERENCIA = "" },
+                    new Market() { Id = 3, LONG = "-46550164", SETCENS = 355030885000091, AREAP = 3550308005040, CODDIST = 87, DISTRITO = "VILA", CODSUBPREF = 26, SUBPREFE = "VILA PRUDENTE", REGIAO5 = "LESTE", REGIAO8 = "LESTE 1", NOME_FEIRA = "VILA FONSECA", REGISTRO = "4041-0", LOGRADOURO = "RUA X", BAIRRO = "SP", LAT = "-23558733", NUMERO = "", REFERENCIA = "" },
+                    new Market() { Id = 2, LONG = "-4655024", SETCENS = 35503020091, AREAP = 1308005040, CODDIST = 17, DISTRITO = "SAO MIGUEL", CODSUBPREF = 26, SUBPREFE = "VILA PRUDENTE", REGIAO5 = "LESTE", REGIAO8 = "LESTE 1", NOME_FEIRA = "VILA SAO MIGUEL", REGISTRO = "4041-2", LOGRADOURO = "RUA X", BAIRRO = "SP", LAT = "-23558733", NUMERO = "", REFERENCIA = "" }
                 });
                 _dbContext.SaveChanges();
             }

@@ -47,3 +47,4 @@ C:\Users\a.de.souza.ramos\source\repos\Unico\Unico.Core.API\obj\Debug\net5.0\Uni
 C:\Users\a.de.souza.ramos\source\repos\Unico\Unico.Core.API\obj\Debug\net5.0\ref\Unico.Core.API.dll
 C:\Users\a.de.souza.ramos\source\repos\Unico\Unico.Core.API\obj\Debug\net5.0\Unico.Core.API.pdb
 C:\Users\a.de.souza.ramos\source\repos\Unico\Unico.Core.API\obj\Debug\net5.0\Unico.Core.API.genruntimeconfig.cache
+C:\Users\a.de.souza.ramos\source\repos\Unico\Unico.Core.API\obj\Debug\net5.0\Unico.Core.API.csprojAssemblyReference.cache
