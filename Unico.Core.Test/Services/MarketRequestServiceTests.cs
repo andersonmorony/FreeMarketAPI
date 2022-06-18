@@ -51,7 +51,7 @@ namespace Unico.Core.Test.Services
 
         }
         [Fact]
-        public async void ShouldReturnException()
+        public async void ShouldThrowErrorReturnMarkets()
         {
             // Arrange
             var InvalidOptions = new DbContextOptionsBuilder<AppDbContext>().Options;
@@ -66,23 +66,6 @@ namespace Unico.Core.Test.Services
             Assert.False(result.IsSuccess);
             Assert.NotNull(result.MsgError);
 
-        }
-        [Fact]
-        public async void ShouldReturnFalseToNoData()
-        {
-            // Arrange
-            var options = new DbContextOptionsBuilder<AppDbContext>().UseInMemoryDatabase(nameof(ShouldReturnFalseToNoData)).Options;
-            var dbContext = new AppDbContext(options);
-            var respository = new MarketRepository(dbContext);
-            var marketService = new MarketService(_mapper, null, respository);
-
-            // Act
-            var result = await marketService.GetMarketsAsync();
-
-            // Assert
-            Assert.False(result.IsSuccess);
-            Assert.Null(result.markets);
-            Assert.NotNull(result.MsgError);
         }
         [Fact]
         public async void ShouldCreateMarket()

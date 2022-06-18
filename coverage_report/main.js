@@ -230,8 +230,8 @@ var assemblies = [
       { "name": "Unico.Core.API.Models.MarketResponse", "rp": "Unico.Core.API_MarketResponse.html", "cl": 1, "ucl": 0, "cal": 1, "tl": 7, "ct": "LineCoverage", "cbm": "-", "cb": 0, "tb": 0, "cm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "hc": [] },
       { "name": "Unico.Core.API.Profiles.MarketProfile", "rp": "Unico.Core.API_MarketProfile.html", "cl": 11, "ucl": 0, "cal": 11, "tl": 26, "ct": "LineCoverage", "cbm": "-", "cb": 0, "tb": 0, "cm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "hc": [] },
       { "name": "Unico.Core.API.Program", "rp": "Unico.Core.API_Program.html", "cl": 0, "ucl": 8, "cal": 8, "tl": 26, "ct": "LineCoverage", "cbm": "-", "cb": 0, "tb": 2, "cm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "hc": [] },
-      { "name": "Unico.Core.API.Repository.MarketRepository", "rp": "Unico.Core.API_MarketRepository.html", "cl": 31, "ucl": 0, "cal": 31, "tl": 62, "ct": "LineCoverage", "cbm": "-", "cb": 1, "tb": 2, "cm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "hc": [] },
-      { "name": "Unico.Core.API.Services.MarketService", "rp": "Unico.Core.API_MarketService.html", "cl": 93, "ucl": 0, "cal": 93, "tl": 164, "ct": "LineCoverage", "cbm": "-", "cb": 34, "tb": 60, "cm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "hc": [] },
+      { "name": "Unico.Core.API.Repository.MarketRepository", "rp": "Unico.Core.API_MarketRepository.html", "cl": 49, "ucl": 0, "cal": 49, "tl": 97, "ct": "LineCoverage", "cbm": "-", "cb": 2, "tb": 4, "cm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "hc": [] },
+      { "name": "Unico.Core.API.Services.MarketService", "rp": "Unico.Core.API_MarketService.html", "cl": 129, "ucl": 0, "cal": 129, "tl": 193, "ct": "LineCoverage", "cbm": "-", "cb": 62, "tb": 110, "cm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "hc": [] },
       { "name": "Unico.Core.API.Startup", "rp": "Unico.Core.API_Startup.html", "cl": 0, "ucl": 40, "cal": 40, "tl": 78, "ct": "LineCoverage", "cbm": "-", "cb": 0, "tb": 10, "cm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "hc": [] },
     ]},
 ];

@@ -13,32 +13,39 @@ using Unico.Core.API.ServicesInterface;
 
 namespace Unico.Core.API.Services
 {
+    /// <summary>
+    /// Service from Market Methods
+    /// </summary>
     public  class MarketService : IMarketServices
     {
         private readonly IMapper _mapper;
         private readonly ILogger _logger;
         private readonly IMarketRepository _marketRepository;
 
+        /// <summary>
+        /// Inject dependece to start the service
+        /// </summary>
+        /// <param name="mapper"></param>
+        /// <param name="logger"></param>
+        /// <param name="marketRepository"></param>
         public MarketService(IMapper mapper, ILogger<MarketService> logger, IMarketRepository marketRepository)
         {
             _mapper = mapper;
             _logger = logger;
             _marketRepository = marketRepository;
         }
-
+        /// <summary>
+        /// Return All Markets
+        /// </summary>
+        /// <returns></returns>
         public async Task<(IEnumerable<MarketResponse> markets, bool IsSuccess, string MsgError)> GetMarketsAsync()
         {
             _logger?.LogInformation("GetMarketsAsync was called");
             try
             {
                 var result = await _marketRepository.GetMarketsAsync();
-                if (result.Any())
-                {
-                    var response = _mapper.Map<IEnumerable<MarketResponse>>(result);
-                    return (response, true, null);
-                }
-                _logger?.LogInformation("GetMarketsAsync was called but no data");
-                return (null, false, "No Data");
+                var response = _mapper.Map<IEnumerable<MarketResponse>>(result);
+                return (response, true, null);
             }
             catch (Exception ex)
             {
@@ -46,7 +53,11 @@ namespace Unico.Core.API.Services
                 return (null, false, ex.Message);
             }
         }
-
+        /// <summary>
+        /// Create a new Market
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
         public async Task<(MarketResponse markets, bool IsSuccess, string MsgError)> CreateMarketAsync(MarketRequest request)
         {
             _logger?.LogInformation("CreateMarketAsync was called");
@@ -66,7 +77,11 @@ namespace Unico.Core.API.Services
             }
 
         }
-
+        /// <summary>
+        /// Delete a market by Id Async
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public async Task<(bool IsSuccess, string MsgError)> DeleteMarketAsync(int id)
         {
             try
@@ -88,7 +103,12 @@ namespace Unico.Core.API.Services
                 return (false, ex.Message);
             }
         }
-
+        /// <summary>
+        /// Edit async a market by Id
+        /// </summary>
+        /// <param name="Id"></param>
+        /// <param name="marketRequest"></param>
+        /// <returns></returns>
         public async Task<(MarketResponse marketResponse, bool IsSuccess, string MsgError)> EditMarketAsync(int Id, MarketRequest marketRequest)
         {
             try
@@ -115,7 +135,11 @@ namespace Unico.Core.API.Services
                 return (null, false, ex.Message);
             }
         }
-
+        /// <summary>
+        /// Get all Markets by Name
+        /// </summary>
+        /// <param name="marketName"></param>
+        /// <returns></returns>
         public async Task<(IEnumerable<MarketResponse> marketResponse, bool IsSuccess, string MsgError)> GetMarketsByNameAync(string marketName)
         {
             try
@@ -139,6 +163,11 @@ namespace Unico.Core.API.Services
             }
             
         }
+        /// <summary>
+        /// Create markets upload by CSV
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
         public async Task<(IEnumerable<MarketCsv> marketResponse, bool IsSuccess, string MsgError)> UploadCsvToCreateMarkets(IEnumerable<MarketCsv> request)
         {
             try

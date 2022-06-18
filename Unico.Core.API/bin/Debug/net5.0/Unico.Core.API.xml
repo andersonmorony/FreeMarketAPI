@@ -68,5 +68,119 @@
             <param name="id">Market Identifie</param>
             <response code="204">Not return values</response>
         </member>
+        <member name="T:Unico.Core.API.Repository.MarketRepository">
+            <summary>
+            Repository from Market
+            </summary>
+        </member>
+        <member name="M:Unico.Core.API.Repository.MarketRepository.#ctor(Unico.Core.API.Data.AppDbContext)">
+            <summary>
+            Inject database 
+            </summary>
+            <param name="appDbContext"></param>
+        </member>
+        <member name="M:Unico.Core.API.Repository.MarketRepository.AddMarketAsync(Unico.Core.API.Data.Market)">
+            <summary>
+            Method to add new market
+            </summary>
+            <param name="marketRequest"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Unico.Core.API.Repository.MarketRepository.AddRangeMarketsAsync(System.Collections.Generic.IEnumerable{Unico.Core.API.Data.Market})">
+            <summary>
+            Method called to add more that one market
+            </summary>
+            <param name="markets"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Unico.Core.API.Repository.MarketRepository.DeleteMarketAsync(Unico.Core.API.Data.Market)">
+            <summary>
+            Method to delete a market
+            </summary>
+            <param name="marketRequest"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Unico.Core.API.Repository.MarketRepository.GetMarketByIdAsync(System.Int32)">
+            <summary>
+            Method to get a market by Id
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Unico.Core.API.Repository.MarketRepository.GetMarketsAsync">
+            <summary>
+            Method to Get all market in the database
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Unico.Core.API.Repository.MarketRepository.GetMarketsByNameAsync(System.String)">
+            <summary>
+            Method to return one or more Market filted by Name (NOME_FEIRA)
+            </summary>
+            <param name="name"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Unico.Core.API.Repository.MarketRepository.UpdateMarketAsync(Unico.Core.API.Data.Market)">
+            <summary>
+            Method to update market
+            </summary>
+            <param name="marketRequest"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Unico.Core.API.Services.MarketService">
+            <summary>
+            Service from Market Methods
+            </summary>
+        </member>
+        <member name="M:Unico.Core.API.Services.MarketService.#ctor(AutoMapper.IMapper,Microsoft.Extensions.Logging.ILogger{Unico.Core.API.Services.MarketService},Unico.Core.API.RepositoryInterface.IMarketRepository)">
+            <summary>
+            Inject dependece to start the service
+            </summary>
+            <param name="mapper"></param>
+            <param name="logger"></param>
+            <param name="marketRepository"></param>
+        </member>
+        <member name="M:Unico.Core.API.Services.MarketService.GetMarketsAsync">
+            <summary>
+            Return All Markets
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Unico.Core.API.Services.MarketService.CreateMarketAsync(Unico.Core.API.Models.MarketRequest)">
+            <summary>
+            Create a new Market
+            </summary>
+            <param name="request"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Unico.Core.API.Services.MarketService.DeleteMarketAsync(System.Int32)">
+            <summary>
+            Delete a market by Id Async
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Unico.Core.API.Services.MarketService.EditMarketAsync(System.Int32,Unico.Core.API.Models.MarketRequest)">
+            <summary>
+            Edit async a market by Id
+            </summary>
+            <param name="Id"></param>
+            <param name="marketRequest"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Unico.Core.API.Services.MarketService.GetMarketsByNameAync(System.String)">
+            <summary>
+            Get all Markets by Name
+            </summary>
+            <param name="marketName"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Unico.Core.API.Services.MarketService.UploadCsvToCreateMarkets(System.Collections.Generic.IEnumerable{Unico.Core.API.Models.MarketCsv})">
+            <summary>
+            Create markets upload by CSV
+            </summary>
+            <param name="request"></param>
+            <returns></returns>
+        </member>
     </members>
 </doc>
