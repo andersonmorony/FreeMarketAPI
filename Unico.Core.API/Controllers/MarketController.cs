@@ -1,24 +1,33 @@
 ﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing;
 using System;
+using System.Net;
 using System.Threading.Tasks;
 using Unico.Core.API.Models;
 using Unico.Core.API.ServicesInterface;
 
 namespace Unico.Core.API.Controllers
 {
+
+    /// <summary>
+    /// Principal controller to application
+    /// Have two injection depedence
+    /// </summary>
     [Route("api/[controller]")]
     [ApiController]
     public class MarketController : ControllerBase
     {
         private readonly IMarketServices _marketService;
-        private readonly LinkGenerator _linkGenerator;
 
-        public MarketController(IMarketServices marketService, LinkGenerator linkGenerator)
+        /// <summary>
+        /// Have one injection depedence
+        /// </summary>
+        /// <param name="marketService"></param>
+        public MarketController(IMarketServices marketService)
         {
             _marketService = marketService;
-            _linkGenerator = linkGenerator;
         }
         /// <summary>
         /// Return all Markets.
@@ -32,10 +41,8 @@ namespace Unico.Core.API.Controllers
             {
                 var response = await _marketService.GetMarketsAsync();
 
-                if (response.IsSuccess)
-                    return Ok(response.markets);
+                return Ok(response.markets);
 
-                return NotFound(response.MsgError);
             }
             catch (Exception)
             {
@@ -104,10 +111,10 @@ namespace Unico.Core.API.Controllers
 
                 if (response.IsSuccess)
                 {
+                    var actionName = nameof(GetMarketByName);
+                    var routeValues = new { name = response.markets.NOME_FEIRA };
+                    return CreatedAtAction(actionName, routeValues, response.markets);
 
-                    var linkGenaretor = _linkGenerator.GetPathByAction("GetMarketByName", "Market", new { name = response.markets.NOME_FEIRA });
-
-                    return Created(linkGenaretor, response.markets);
                 }
                 return BadRequest();
             }

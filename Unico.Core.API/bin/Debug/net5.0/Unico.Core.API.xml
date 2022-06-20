@@ -4,6 +4,18 @@
         <name>Unico.Core.API</name>
     </assembly>
     <members>
+        <member name="T:Unico.Core.API.Controllers.MarketController">
+            <summary>
+            Principal controller to application
+            Have two injection depedence
+            </summary>
+        </member>
+        <member name="M:Unico.Core.API.Controllers.MarketController.#ctor(Unico.Core.API.ServicesInterface.IMarketServices)">
+            <summary>
+            Have one injection depedence
+            </summary>
+            <param name="marketService"></param>
+        </member>
         <member name="M:Unico.Core.API.Controllers.MarketController.GetAllMarkets">
             <summary>
             Return all Markets.
@@ -84,14 +96,14 @@
             Method to add new market
             </summary>
             <param name="marketRequest"></param>
-            <returns></returns>
+            <returns>the market created</returns>
         </member>
         <member name="M:Unico.Core.API.Repository.MarketRepository.AddRangeMarketsAsync(System.Collections.Generic.IEnumerable{Unico.Core.API.Data.Market})">
             <summary>
             Method called to add more that one market
             </summary>
             <param name="markets"></param>
-            <returns></returns>
+            <returns>All markets reveiced by param after inserted in database</returns>
         </member>
         <member name="M:Unico.Core.API.Repository.MarketRepository.DeleteMarketAsync(Unico.Core.API.Data.Market)">
             <summary>
@@ -105,20 +117,20 @@
             Method to get a market by Id
             </summary>
             <param name="id"></param>
-            <returns></returns>
+            <returns>A market found</returns>
         </member>
         <member name="M:Unico.Core.API.Repository.MarketRepository.GetMarketsAsync">
             <summary>
             Method to Get all market in the database
             </summary>
-            <returns></returns>
+            <returns>All markets found</returns>
         </member>
         <member name="M:Unico.Core.API.Repository.MarketRepository.GetMarketsByNameAsync(System.String)">
             <summary>
             Method to return one or more Market filted by Name (NOME_FEIRA)
             </summary>
             <param name="name"></param>
-            <returns></returns>
+            <returns>All markets found</returns>
         </member>
         <member name="M:Unico.Core.API.Repository.MarketRepository.UpdateMarketAsync(Unico.Core.API.Data.Market)">
             <summary>
@@ -144,21 +156,22 @@
             <summary>
             Return All Markets
             </summary>
-            <returns></returns>
+            <returns>Return if was success, a message error when have and all markets at database</returns>
         </member>
         <member name="M:Unico.Core.API.Services.MarketService.CreateMarketAsync(Unico.Core.API.Models.MarketRequest)">
             <summary>
             Create a new Market
             </summary>
             <param name="request"></param>
-            <returns></returns>
+            <returns>Return if was success, a message error when have and the market created with property Id</returns>
         </member>
         <member name="M:Unico.Core.API.Services.MarketService.DeleteMarketAsync(System.Int32)">
             <summary>
-            Delete a market by Id Async
+            Verify if the market exist
+            and delete async by Id or return not found in message error
             </summary>
             <param name="id"></param>
-            <returns></returns>
+            <returns>Return if was success and message error when have</returns>
         </member>
         <member name="M:Unico.Core.API.Services.MarketService.EditMarketAsync(System.Int32,Unico.Core.API.Models.MarketRequest)">
             <summary>
@@ -166,21 +179,22 @@
             </summary>
             <param name="Id"></param>
             <param name="marketRequest"></param>
-            <returns></returns>
+            <returns>Return if was success, a message error when have and market after edited with news values</returns>
         </member>
         <member name="M:Unico.Core.API.Services.MarketService.GetMarketsByNameAync(System.String)">
             <summary>
-            Get all Markets by Name
+            Get all Markets by param Name
             </summary>
             <param name="marketName"></param>
-            <returns></returns>
+            <returns>Return if was success, a message error when have and Return all Markets found after the filter with  that param sended</returns>
         </member>
         <member name="M:Unico.Core.API.Services.MarketService.UploadCsvToCreateMarkets(System.Collections.Generic.IEnumerable{Unico.Core.API.Models.MarketCsv})">
             <summary>
-            Create markets upload by CSV
+            Mapper the models and after
+            to create markets upload by CSV
             </summary>
             <param name="request"></param>
-            <returns></returns>
+            <returns>Return if was success, a message error when have and all markets uploaded</returns>
         </member>
     </members>
 </doc>

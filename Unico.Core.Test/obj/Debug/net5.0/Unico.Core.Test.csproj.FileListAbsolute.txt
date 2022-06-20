@@ -135,3 +135,5 @@ C:\Users\a.de.souza.ramos\source\repos\Unico\Unico.Core.Test\bin\Debug\net5.0\Se
 C:\Users\a.de.souza.ramos\source\repos\Unico\Unico.Core.Test\bin\Debug\net5.0\Serilog.Sinks.File.dll
 C:\Users\a.de.souza.ramos\source\repos\Unico\Unico.Core.Test\bin\Debug\net5.0\Serilog.Sinks.RollingFile.dll
 C:\Users\a.de.souza.ramos\source\repos\Unico\Unico.Core.Test\bin\Debug\net5.0\Unico.Core.API.xml
+C:\Users\a.de.souza.ramos\source\repos\Unico\Unico.Core.Test\bin\Debug\net5.0\Castle.Core.dll
+C:\Users\a.de.souza.ramos\source\repos\Unico\Unico.Core.Test\bin\Debug\net5.0\Moq.dll

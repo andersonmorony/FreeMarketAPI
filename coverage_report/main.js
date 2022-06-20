@@ -221,7 +221,7 @@ var assemblies = [
   {
     "name": "Unico.Core.API",
     "classes": [
-      { "name": "Unico.Core.API.Controllers.MarketController", "rp": "Unico.Core.API_MarketController.html", "cl": 0, "ucl": 57, "cal": 57, "tl": 167, "ct": "LineCoverage", "cbm": "-", "cb": 0, "tb": 20, "cm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "hc": [] },
+      { "name": "Unico.Core.API.Controllers.MarketController", "rp": "Unico.Core.API_MarketController.html", "cl": 30, "ucl": 63, "cal": 93, "tl": 176, "ct": "LineCoverage", "cbm": "-", "cb": 6, "tb": 38, "cm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "hc": [] },
       { "name": "Unico.Core.API.Controllers.OperationsController", "rp": "Unico.Core.API_OperationsController.html", "cl": 0, "ucl": 31, "cal": 31, "tl": 67, "ct": "LineCoverage", "cbm": "-", "cb": 0, "tb": 6, "cm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "hc": [] },
       { "name": "Unico.Core.API.Data.AppDbContext", "rp": "Unico.Core.API_AppDbContext.html", "cl": 4, "ucl": 0, "cal": 4, "tl": 13, "ct": "LineCoverage", "cbm": "-", "cb": 0, "tb": 0, "cm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "hc": [] },
       { "name": "Unico.Core.API.Data.Market", "rp": "Unico.Core.API_Market.html", "cl": 1, "ucl": 0, "cal": 1, "tl": 13, "ct": "LineCoverage", "cbm": "-", "cb": 0, "tb": 0, "cm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "hc": [] },
@@ -231,7 +231,7 @@ var assemblies = [
       { "name": "Unico.Core.API.Profiles.MarketProfile", "rp": "Unico.Core.API_MarketProfile.html", "cl": 11, "ucl": 0, "cal": 11, "tl": 26, "ct": "LineCoverage", "cbm": "-", "cb": 0, "tb": 0, "cm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "hc": [] },
       { "name": "Unico.Core.API.Program", "rp": "Unico.Core.API_Program.html", "cl": 0, "ucl": 8, "cal": 8, "tl": 26, "ct": "LineCoverage", "cbm": "-", "cb": 0, "tb": 2, "cm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "hc": [] },
       { "name": "Unico.Core.API.Repository.MarketRepository", "rp": "Unico.Core.API_MarketRepository.html", "cl": 49, "ucl": 0, "cal": 49, "tl": 97, "ct": "LineCoverage", "cbm": "-", "cb": 2, "tb": 4, "cm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "hc": [] },
-      { "name": "Unico.Core.API.Services.MarketService", "rp": "Unico.Core.API_MarketService.html", "cl": 129, "ucl": 0, "cal": 129, "tl": 193, "ct": "LineCoverage", "cbm": "-", "cb": 62, "tb": 110, "cm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "hc": [] },
+      { "name": "Unico.Core.API.Services.MarketService", "rp": "Unico.Core.API_MarketService.html", "cl": 143, "ucl": 0, "cal": 143, "tl": 196, "ct": "LineCoverage", "cbm": "-", "cb": 81, "tb": 144, "cm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "hc": [] },
       { "name": "Unico.Core.API.Startup", "rp": "Unico.Core.API_Startup.html", "cl": 0, "ucl": 40, "cal": 40, "tl": 78, "ct": "LineCoverage", "cbm": "-", "cb": 0, "tb": 10, "cm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "hc": [] },
     ]},
 ];
