@@ -118,7 +118,7 @@ namespace Unico.Core.Test.Controller
         public void CreateMarket_ShouldFail()
         {
             // Arrange
-            var _marketController = new MarketController(_marketService);
+            var _marketController = new MarketController(null);
             var param = new MarketRequest() { LONG = "-4655024", SETCENS = 35503020091, AREAP = 1308005040, CODDIST = 17, DISTRITO = "SAO MIGUEL", CODSUBPREF = 26, SUBPREFE = "VILA PRUDENTE", REGIAO5 = "LESTE", REGIAO8 = "LESTE 1", NOME_FEIRA = "VILA SAO MIGUEL", REGISTRO = "4041-2", LOGRADOURO = "RUA X", BAIRRO = "SP", LAT = "-23558733", NUMERO = "", REFERENCIA = "" };
 
             // Act
@@ -135,7 +135,7 @@ namespace Unico.Core.Test.Controller
             var param = new MarketRequest() { LONG = "-4655024", SETCENS = 35503020091, AREAP = 1308005040, CODDIST = 17, DISTRITO = "NEW DESTRITO", CODSUBPREF = 26, SUBPREFE = "VILA PRUDENTE", REGIAO5 = "LESTE", REGIAO8 = "LESTE 1", NOME_FEIRA = "VILA SAO MIGUEL", REGISTRO = "4041-2", LOGRADOURO = "RUA X", BAIRRO = "SP", LAT = "-23558733", NUMERO = "", REFERENCIA = "" };
 
             // Act
-            var result = _marketController.EditMarket(1, param).Result;
+            var result = _marketController.EditMarket(2, param).Result;
 
             // Assert
             Assert.Equal("NEW DESTRITO", result.Value.DISTRITO);

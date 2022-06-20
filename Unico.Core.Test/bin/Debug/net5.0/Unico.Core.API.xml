@@ -99,6 +99,16 @@
             <param name="filename"></param>
             <returns>Status code 200 with all markets created</returns>
         </member>
+        <member name="T:Unico.Core.API.Profiles.MarketProfile">
+            <summary>
+            Class type profile
+            </summary>
+        </member>
+        <member name="M:Unico.Core.API.Profiles.MarketProfile.#ctor">
+            <summary>
+            Method to create the Map between the models in service
+            </summary>
+        </member>
         <member name="T:Unico.Core.API.Repository.MarketRepository">
             <summary>
             Repository from Market
