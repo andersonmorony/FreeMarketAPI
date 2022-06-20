@@ -37,7 +37,7 @@ namespace Unico.Core.API.Services
         /// <summary>
         /// Return All Markets
         /// </summary>
-        /// <returns></returns>
+        /// <returns>Return if was success, a message error when have and all markets at database</returns>
         public async Task<(IEnumerable<MarketResponse> markets, bool IsSuccess, string MsgError)> GetMarketsAsync()
         {
             _logger?.LogInformation("GetMarketsAsync was called");
@@ -57,7 +57,7 @@ namespace Unico.Core.API.Services
         /// Create a new Market
         /// </summary>
         /// <param name="request"></param>
-        /// <returns></returns>
+        /// <returns>Return if was success, a message error when have and the market created with property Id</returns>
         public async Task<(MarketResponse markets, bool IsSuccess, string MsgError)> CreateMarketAsync(MarketRequest request)
         {
             _logger?.LogInformation("CreateMarketAsync was called");
@@ -78,10 +78,11 @@ namespace Unico.Core.API.Services
 
         }
         /// <summary>
-        /// Delete a market by Id Async
+        /// Verify if the market exist
+        /// and delete async by Id or return not found in message error
         /// </summary>
         /// <param name="id"></param>
-        /// <returns></returns>
+        /// <returns>Return if was success and message error when have</returns>
         public async Task<(bool IsSuccess, string MsgError)> DeleteMarketAsync(int id)
         {
             try
@@ -108,7 +109,7 @@ namespace Unico.Core.API.Services
         /// </summary>
         /// <param name="Id"></param>
         /// <param name="marketRequest"></param>
-        /// <returns></returns>
+        /// <returns>Return if was success, a message error when have and market after edited with news values</returns>
         public async Task<(MarketResponse marketResponse, bool IsSuccess, string MsgError)> EditMarketAsync(int Id, MarketRequest marketRequest)
         {
             try
@@ -136,10 +137,10 @@ namespace Unico.Core.API.Services
             }
         }
         /// <summary>
-        /// Get all Markets by Name
+        /// Get all Markets by param Name
         /// </summary>
         /// <param name="marketName"></param>
-        /// <returns></returns>
+        /// <returns>Return if was success, a message error when have and Return all Markets found after the filter with  that param sended</returns>
         public async Task<(IEnumerable<MarketResponse> marketResponse, bool IsSuccess, string MsgError)> GetMarketsByNameAync(string marketName)
         {
             try
@@ -164,10 +165,11 @@ namespace Unico.Core.API.Services
             
         }
         /// <summary>
-        /// Create markets upload by CSV
+        /// Mapper the models and after
+        /// to create markets upload by CSV
         /// </summary>
         /// <param name="request"></param>
-        /// <returns></returns>
+        /// <returns>Return if was success, a message error when have and all markets uploaded</returns>
         public async Task<(IEnumerable<MarketCsv> marketResponse, bool IsSuccess, string MsgError)> UploadCsvToCreateMarkets(IEnumerable<MarketCsv> request)
         {
             try

@@ -27,7 +27,7 @@ namespace Unico.Core.API.Repository
         /// Method to add new market
         /// </summary>
         /// <param name="marketRequest"></param>
-        /// <returns></returns>
+        /// <returns>the market created</returns>
         public async Task<Market> AddMarketAsync(Market marketRequest)
         {
             _dbContext.Markets.Add(marketRequest);
@@ -39,7 +39,7 @@ namespace Unico.Core.API.Repository
         /// Method called to add more that one market
         /// </summary>
         /// <param name="markets"></param>
-        /// <returns></returns>
+        /// <returns>All markets reveiced by param after inserted in database</returns>
         public async Task<IEnumerable<Market>> AddRangeMarketsAsync(IEnumerable<Market> markets)
         {
             await _dbContext.Markets.AddRangeAsync(markets);
@@ -61,7 +61,7 @@ namespace Unico.Core.API.Repository
         /// Method to get a market by Id
         /// </summary>
         /// <param name="id"></param>
-        /// <returns></returns>
+        /// <returns>A market found</returns>
         public async Task<Market> GetMarketByIdAsync(int id)
         {
             return await _dbContext.Markets.FirstOrDefaultAsync(m => m.Id == id);
@@ -69,7 +69,7 @@ namespace Unico.Core.API.Repository
         /// <summary>
         /// Method to Get all market in the database
         /// </summary>
-        /// <returns></returns>
+        /// <returns>All markets found</returns>
         public async Task<IEnumerable<Market>> GetMarketsAsync()
         {
             return await _dbContext.Markets.ToListAsync();
@@ -78,7 +78,7 @@ namespace Unico.Core.API.Repository
         /// Method to return one or more Market filted by Name (NOME_FEIRA)
         /// </summary>
         /// <param name="name"></param>
-        /// <returns></returns>
+        /// <returns>All markets found</returns>
         public async Task<IEnumerable<Market>> GetMarketsByNameAsync(string name)
         {
             return await _dbContext.Markets.Where(m => m.NOME_FEIRA == name).ToListAsync();
