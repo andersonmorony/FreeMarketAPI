@@ -35,7 +35,8 @@ namespace Unico.Core.API
 
             services.AddDbContext<AppDbContext>(options =>
             {
-                options.UseInMemoryDatabase("Market");
+                //options.UseInMemoryDatabase("Market");
+                options.UseSqlServer(Configuration.GetConnectionString("Default"));
             });
 
             services.AddAutoMapper(typeof(Startup));

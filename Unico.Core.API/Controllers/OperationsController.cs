@@ -13,16 +13,29 @@ using Unico.Core.API.ServicesInterface;
 
 namespace Unico.Core.API.Controllers
 {
+    /// <summary>
+    /// Operation controller, Here you can use to Upload a CSV by Option Header
+    /// </summary>
     [Route("api/[controller]")]
     [ApiController]
     public class OperationsController : ControllerBase
     {
         private readonly IMarketServices _marketServices;
 
+        /// <summary>
+        /// Constructor that have one dependency
+        /// </summary>
+        /// <param name="marketServices"></param>
         public OperationsController(IMarketServices marketServices)
         {
             _marketServices = marketServices;
         }
+        /// <summary>
+        /// Method to create new markets by CSV file.
+        /// CSV need stay in "files" path to be find
+        /// </summary>
+        /// <param name="filename"></param>
+        /// <returns>Status code 200 with all markets created</returns>
         [HttpOptions("{filename}", Name = "InsertCsv")]
         public async Task<IActionResult> InsertCsv(string filename)
         {

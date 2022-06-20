@@ -8,8 +8,14 @@ using Unico.Core.API.Models;
 
 namespace Unico.Core.API.Profiles
 {
+    /// <summary>
+    /// Class type profile
+    /// </summary>
     public class MarketProfile : Profile
     {
+        /// <summary>
+        /// Method to create the Map between the models in service
+        /// </summary>
         public MarketProfile()
         {
             CreateMap<MarketRequest, Market>()
@@ -19,8 +25,9 @@ namespace Unico.Core.API.Profiles
             CreateMap<MarketResponse, Market>()
                 .ReverseMap();
             CreateMap<Market, MarketCsv>()
-               .ReverseMap();
-
+                .ReverseMap()
+                .ForMember(x => x.Id, opt => opt.Ignore())
+                .ForSourceMember(x => x.Id, y => y.DoNotValidate());
         }
     }
 }

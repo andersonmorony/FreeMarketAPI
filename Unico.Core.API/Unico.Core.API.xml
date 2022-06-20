@@ -80,6 +80,35 @@
             <param name="id">Market Identifie</param>
             <response code="204">Not return values</response>
         </member>
+        <member name="T:Unico.Core.API.Controllers.OperationsController">
+            <summary>
+            Operation controller, Here you can use to Upload a CSV by Option Header
+            </summary>
+        </member>
+        <member name="M:Unico.Core.API.Controllers.OperationsController.#ctor(Unico.Core.API.ServicesInterface.IMarketServices)">
+            <summary>
+            Constructor that have one dependency
+            </summary>
+            <param name="marketServices"></param>
+        </member>
+        <member name="M:Unico.Core.API.Controllers.OperationsController.InsertCsv(System.String)">
+            <summary>
+            Method to create new markets by CSV file.
+            CSV need stay in "files" path to be find
+            </summary>
+            <param name="filename"></param>
+            <returns>Status code 200 with all markets created</returns>
+        </member>
+        <member name="T:Unico.Core.API.Profiles.MarketProfile">
+            <summary>
+            Class type profile
+            </summary>
+        </member>
+        <member name="M:Unico.Core.API.Profiles.MarketProfile.#ctor">
+            <summary>
+            Method to create the Map between the models in service
+            </summary>
+        </member>
         <member name="T:Unico.Core.API.Repository.MarketRepository">
             <summary>
             Repository from Market
